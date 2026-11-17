@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS avis (
     source_id INTEGER NOT NULL REFERENCES sources(id),
     entreprise TEXT NOT NULL,
     auteur TEXT,
-    note INTEGER NOT NULL CHECK (note BETWEEN 1 AND 5),
+    note INTEGER CHECK (note IS NULL OR note BETWEEN 1 AND 5),
     date TEXT NOT NULL,
     texte TEXT,
     id_externe TEXT NOT NULL,

@@ -26,3 +26,18 @@ def test_extraction_html_invalide():
 
 def test_top_mots():
     assert analyse.top_mots(["service service rapide"], 1) == [("service", 2)]
+
+
+def test_nettoyer_html_mastodon():
+    assert collecte.nettoyer_html("<p>Le <b>train</b> est   en retard</p>") == "Le train est en retard"
+
+
+def test_sentiment_negation():
+    assert analyse.sentiment_naif("ce n'est pas bien") <= 0 or analyse.sentiment_naif("pas bien") < 0
+
+
+def test_note_nulle_acceptee(tmp_path):
+    base = tmp_path / "m.db"
+    avis = [{"source": "mastodon", "entreprise": "sncf", "auteur": "a", "note": None,
+             "date": "2026-01-01", "texte": "retard encore", "id_externe": "1"}]
+    assert stockage.inserer_avis(avis, base) == 1

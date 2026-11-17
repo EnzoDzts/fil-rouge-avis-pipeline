@@ -8,13 +8,19 @@ from . import collecte, stockage
 def main() -> None:
     """Exécute la collecte, sauvegarde le CSV brut et alimente SQLite."""
     parseur = argparse.ArgumentParser(description="Pipeline de collecte d'avis")
+    parseur.add_argument("--mastodon", nargs="+", metavar="HASHTAG", help="hashtags Mastodon (API publique, sans clé)")
     parseur.add_argument("--demo", action="store_true", help="utiliser des données fictives")
     parseur.add_argument("--domaine", default="www.boursorama.com", help="domaine Trustpilot")
-    parseur.add_argument("--pages", type=int, default=3)
+    parseur.add_argument("--pages", type=int, default=5)
     args = parseur.parse_args()
     logging.basicConfig(level=logging.INFO)
 
-    avis = collecte.generer_donnees_demo() if args.demo else collecte.scraper_trustpilot(args.domaine, args.pages)
+    if args.mastodon:
+        avis = [a for tag in args.mastodon for a in collecte.collecter_mastodon(tag, args.pages)]
+    elif args.demo:
+        avis = collecte.generer_donnees_demo()
+    else:
+        avis = collecte.scraper_trustpilot(args.domaine, args.pages)
     if not avis:
         print("Aucun avis collecté (site bloqué ?). Relancez avec --demo.")
         return

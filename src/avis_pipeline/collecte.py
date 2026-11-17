@@ -111,3 +111,46 @@ def sauvegarder_csv(avis: list[dict], chemin=CHEMIN_CSV_BRUT) -> None:
         ecrivain = csv.DictWriter(f, fieldnames=CHAMPS)
         ecrivain.writeheader()
         ecrivain.writerows(avis)
+
+
+def nettoyer_html(contenu: str) -> str:
+    """Retire les balises HTML d'un message Mastodon et normalise les espaces."""
+    return " ".join(BeautifulSoup(contenu, "html.parser").get_text(" ").split())
+
+
+def collecter_mastodon(hashtag: str, pages: int = 5, instance: str = "mastodon.social") -> list[dict]:
+    """Collecte les messages publics français d'un hashtag via l'API Mastodon.
+
+    L'API de timeline par hashtag est publique et ne demande aucune clé.
+    Les messages n'ont pas de note : `note` vaut None (elle sera estimée).
+
+    Args:
+        hashtag: hashtag sans '#', ex. 'sncf'.
+        pages: nombre de pages de 40 messages à parcourir (pagination par max_id).
+        instance: serveur Mastodon interrogé.
+    """
+    url = f"https://{instance}/api/v1/timelines/tag/{hashtag}"
+    resultats: list[dict] = []
+    max_id = None
+    for _ in range(pages):
+        params = {"limit": 40, **({"max_id": max_id} if max_id else {})}
+        try:
+            rep = requests.get(url, params=params, headers={"User-Agent": USER_AGENT}, timeout=15)
+            rep.raise_for_status()
+            messages = rep.json()
+        except (requests.RequestException, ValueError) as erreur:
+            journal.warning("Échec Mastodon %s : %s", url, erreur)
+            break
+        if not messages:
+            break
+        for m in messages:
+            texte = nettoyer_html(m["content"])
+            if m.get("language") == "fr" and len(texte) > 20 and not m.get("reblog"):
+                resultats.append({
+                    "source": "mastodon", "entreprise": hashtag.lower(),
+                    "auteur": m["account"]["acct"], "note": None,
+                    "date": m["created_at"][:10], "texte": texte, "id_externe": m["id"],
+                })
+        max_id = messages[-1]["id"]
+        time.sleep(DELAI_ENTRE_REQUETES_S)
+    return resultats

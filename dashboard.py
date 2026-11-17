@@ -29,19 +29,19 @@ st.sidebar.header("Filtres")
 sources = st.sidebar.multiselect("Source", sorted(df["source"].unique()), default=sorted(df["source"].unique()))
 entreprises = st.sidebar.multiselect("Entreprise", sorted(df["entreprise"].unique()), default=sorted(df["entreprise"].unique()))
 debut, fin = st.sidebar.date_input("Période", (df["date"].min().date(), df["date"].max().date()))
-notes = st.sidebar.slider("Notes", 1, 5, (1, 5))
+notes = st.sidebar.slider("Note (réelle ou estimée)", 1.0, 5.0, (1.0, 5.0), step=0.5)
 
 filtre = df[df["source"].isin(sources) & df["entreprise"].isin(entreprises)
-            & df["date"].between(str(debut), str(fin)) & df["note"].between(*notes)]
+            & df["date"].between(str(debut), str(fin)) & df["note_finale"].between(*notes)]
 
 col1, col2, col3 = st.columns(3)
 col1.metric("Avis", len(filtre))
-col2.metric("Note moyenne", f"{filtre['note'].mean():.2f}" if len(filtre) else "–")
+col2.metric("Note moyenne", f"{filtre['note_finale'].mean():.2f}" if len(filtre) else "–")
 col3.metric("Sentiment moyen (VADER)", f"{filtre['sentiment_vader'].mean():.2f}" if len(filtre) else "–")
 
 g1, g2 = st.columns(2)
-g1.plotly_chart(px.histogram(filtre, x="note", color="entreprise", barmode="group",
-                             title="Distribution des notes"), width="stretch")
+g1.plotly_chart(px.histogram(filtre, x="note_finale", nbins=9, color="entreprise", barmode="group",
+                             title="Distribution des notes (estimées si absentes)"), width="stretch")
 g2.plotly_chart(px.line(analyse.evolution_mensuelle(filtre), x="mois", y="note_moyenne", color="entreprise",
                         title="Évolution mensuelle de la note moyenne"), width="stretch")
 
@@ -50,6 +50,8 @@ st.plotly_chart(px.bar(x=[m for m, _ in mots], y=[c for _, c in mots],
                        labels={"x": "Mot", "y": "Occurrences"}, title="Mots les plus fréquents"),
                 width="stretch")
 
+st.subheader("Nuage de mots")
+st.image(analyse.nuage_de_mots(filtre["texte"]))
 st.subheader("Synthèse IA")
 st.write(ia.synthese_hebdo(filtre))
 st.subheader("Corrélation sentiment / note")
