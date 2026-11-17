@@ -1,0 +1,301 @@
+source,entreprise,auteur,note,date,texte,id_externe
+google_maps,EMLV,Utilisateur72,4,2025-04-15,"Excellent service, très réactif. Très bonne expérience, cursus enrichissant.",demo-0
+google_maps,EDHEC,Utilisateur16,4,2025-04-06,"Équipe pédagogique au top, je recommande. Excellent service, très réactif.",demo-1
+trustpilot,EMLV,Utilisateur113,2,2026-04-05,"Organisation catastrophique, je déconseille. Administration injoignable, très décevant.",demo-2
+trustpilot,ESSEC,Utilisateur175,4,2025-10-12,"Équipe pédagogique au top, je recommande. Excellent service, très réactif.",demo-3
+trustpilot,ESCP,Utilisateur434,5,2025-12-19,"Très bonne expérience, cursus enrichissant. Excellent service, très réactif.",demo-4
+google_maps,EDHEC,Utilisateur499,4,2026-01-23,"Excellent service, très réactif. Très bonne expérience, cursus enrichissant.",demo-5
+trustpilot,ESCP,Utilisateur296,5,2025-07-16,"Excellent service, très réactif. Super campus et bonne ambiance.",demo-6
+trustpilot,ESSEC,Utilisateur41,3,2025-08-27,"Correct sans plus. Quelques bons cours, d'autres moins intéressants.",demo-7
+google_maps,ESCP,Utilisateur190,2,2025-12-30,"Frais élevés pour un service médiocre. Organisation catastrophique, je déconseille.",demo-8
+google_maps,ESCP,Utilisateur312,5,2026-10-13,"Équipe pédagogique au top, je recommande. Très bonne expérience, cursus enrichissant.",demo-9
+google_maps,ESSEC,Utilisateur351,5,2025-11-29,"Excellent service, très réactif. Super campus et bonne ambiance.",demo-10
+trustpilot,EMLV,Utilisateur206,4,2025-10-02,"Excellent service, très réactif. Super campus et bonne ambiance.",demo-11
+trustpilot,ESCP,Utilisateur74,4,2025-09-29,"Équipe pédagogique au top, je recommande. Excellent service, très réactif.",demo-12
+trustpilot,ESCP,Utilisateur460,5,2026-08-21,"Super campus et bonne ambiance. Équipe pédagogique au top, je recommande.",demo-13
+trustpilot,ESSEC,Utilisateur47,5,2025-02-18,"Excellent service, très réactif. Super campus et bonne ambiance.",demo-14
+trustpilot,ESSEC,Utilisateur306,4,2025-03-07,"Super campus et bonne ambiance. Équipe pédagogique au top, je recommande.",demo-15
+google_maps,EDHEC,Utilisateur349,1,2025-04-28,"Organisation catastrophique, je déconseille. Aucune réponse à mes mails, nul.",demo-16
+google_maps,ESCP,Utilisateur151,3,2026-03-22,"Correct sans plus. Quelques bons cours, d'autres moins intéressants.",demo-17
+trustpilot,EMLV,Utilisateur498,5,2026-05-28,"Équipe pédagogique au top, je recommande. Très bonne expérience, cursus enrichissant.",demo-18
+trustpilot,EMLV,Utilisateur431,3,2026-10-17,"Expérience moyenne, peut mieux faire. Correct sans plus.",demo-19
+google_maps,ESSEC,Utilisateur307,4,2025-11-28,"Super campus et bonne ambiance. Excellent service, très réactif.",demo-20
+trustpilot,EMLV,Utilisateur450,4,2025-11-11,"Équipe pédagogique au top, je recommande. Excellent service, très réactif.",demo-21
+google_maps,ESSEC,Utilisateur375,5,2026-05-13,"Excellent service, très réactif. Très bonne expérience, cursus enrichissant.",demo-22
+google_maps,ESSEC,Utilisateur338,2,2026-05-02,"Frais élevés pour un service médiocre. Aucune réponse à mes mails, nul.",demo-23
+google_maps,EDHEC,Utilisateur366,5,2025-11-16,"Super campus et bonne ambiance. Très bonne expérience, cursus enrichissant.",demo-24
+trustpilot,ESCP,Utilisateur461,3,2026-06-14,"Quelques bons cours, d'autres moins intéressants. Correct sans plus.",demo-25
+google_maps,ESSEC,Utilisateur302,4,2025-08-14,"Excellent service, très réactif. Super campus et bonne ambiance.",demo-26
+google_maps,EMLV,Utilisateur35,4,2025-02-02,"Très bonne expérience, cursus enrichissant. Excellent service, très réactif.",demo-27
+google_maps,ESSEC,Utilisateur371,4,2026-08-08,"Super campus et bonne ambiance. Excellent service, très réactif.",demo-28
+trustpilot,EDHEC,Utilisateur98,5,2025-04-07,"Excellent service, très réactif. Très bonne expérience, cursus enrichissant.",demo-29
+google_maps,EDHEC,Utilisateur345,3,2026-11-01,"Expérience moyenne, peut mieux faire. Correct sans plus.",demo-30
+trustpilot,EMLV,Utilisateur373,4,2025-12-14,"Excellent service, très réactif. Super campus et bonne ambiance.",demo-31
+trustpilot,ESSEC,Utilisateur94,5,2025-10-13,"Super campus et bonne ambiance. Excellent service, très réactif.",demo-32
+trustpilot,EMLV,Utilisateur414,4,2026-07-18,"Excellent service, très réactif. Super campus et bonne ambiance.",demo-33
+google_maps,EMLV,Utilisateur86,5,2026-02-21,"Super campus et bonne ambiance. Équipe pédagogique au top, je recommande.",demo-34
+trustpilot,ESSEC,Utilisateur463,4,2025-03-02,"Équipe pédagogique au top, je recommande. Super campus et bonne ambiance.",demo-35
+trustpilot,EMLV,Utilisateur147,4,2026-03-10,"Super campus et bonne ambiance. Excellent service, très réactif.",demo-36
+trustpilot,ESSEC,Utilisateur112,4,2025-03-01,"Excellent service, très réactif. Très bonne expérience, cursus enrichissant.",demo-37
+google_maps,ESCP,Utilisateur30,5,2026-06-05,"Excellent service, très réactif. Super campus et bonne ambiance.",demo-38
+google_maps,EMLV,Utilisateur346,4,2025-08-29,"Super campus et bonne ambiance. Excellent service, très réactif.",demo-39
+google_maps,ESSEC,Utilisateur215,4,2026-11-05,"Très bonne expérience, cursus enrichissant. Équipe pédagogique au top, je recommande.",demo-40
+trustpilot,ESSEC,Utilisateur123,4,2025-09-29,"Super campus et bonne ambiance. Excellent service, très réactif.",demo-41
+google_maps,ESCP,Utilisateur5,2,2026-04-15,"Administration injoignable, très décevant. Aucune réponse à mes mails, nul.",demo-42
+trustpilot,ESSEC,Utilisateur68,5,2025-12-24,"Excellent service, très réactif. Super campus et bonne ambiance.",demo-43
+trustpilot,ESCP,Utilisateur314,4,2026-11-01,"Excellent service, très réactif. Très bonne expérience, cursus enrichissant.",demo-44
+google_maps,ESCP,Utilisateur481,5,2025-05-18,"Très bonne expérience, cursus enrichissant. Excellent service, très réactif.",demo-45
+trustpilot,EMLV,Utilisateur310,3,2025-08-04,"Expérience moyenne, peut mieux faire. Quelques bons cours, d'autres moins intéressants.",demo-46
+trustpilot,ESSEC,Utilisateur259,4,2026-05-16,"Très bonne expérience, cursus enrichissant. Excellent service, très réactif.",demo-47
+google_maps,EMLV,Utilisateur2,2,2025-12-08,"Frais élevés pour un service médiocre. Organisation catastrophique, je déconseille.",demo-48
+google_maps,ESCP,Utilisateur380,2,2026-03-29,"Aucune réponse à mes mails, nul. Organisation catastrophique, je déconseille.",demo-49
+google_maps,EMLV,Utilisateur280,5,2025-02-06,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-50
+trustpilot,ESSEC,Utilisateur66,5,2025-02-12,"Très bonne expérience, cursus enrichissant. Équipe pédagogique au top, je recommande.",demo-51
+google_maps,EMLV,Utilisateur342,4,2025-04-16,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-52
+google_maps,EDHEC,Utilisateur474,3,2025-08-31,"Correct sans plus. Expérience moyenne, peut mieux faire.",demo-53
+trustpilot,EDHEC,Utilisateur401,5,2026-02-26,"Équipe pédagogique au top, je recommande. Super campus et bonne ambiance.",demo-54
+google_maps,ESSEC,Utilisateur196,4,2025-02-09,"Super campus et bonne ambiance. Excellent service, très réactif.",demo-55
+trustpilot,ESSEC,Utilisateur421,5,2025-08-22,"Équipe pédagogique au top, je recommande. Excellent service, très réactif.",demo-56
+trustpilot,ESSEC,Utilisateur169,3,2025-10-13,"Correct sans plus. Quelques bons cours, d'autres moins intéressants.",demo-57
+trustpilot,ESCP,Utilisateur481,3,2025-01-29,"Correct sans plus. Quelques bons cours, d'autres moins intéressants.",demo-58
+trustpilot,ESSEC,Utilisateur20,3,2025-04-22,"Expérience moyenne, peut mieux faire. Quelques bons cours, d'autres moins intéressants.",demo-59
+google_maps,ESCP,Utilisateur198,4,2026-08-14,"Équipe pédagogique au top, je recommande. Super campus et bonne ambiance.",demo-60
+trustpilot,EMLV,Utilisateur1,2,2026-06-17,"Frais élevés pour un service médiocre. Aucune réponse à mes mails, nul.",demo-61
+trustpilot,EDHEC,Utilisateur320,5,2025-11-18,"Excellent service, très réactif. Très bonne expérience, cursus enrichissant.",demo-62
+trustpilot,ESCP,Utilisateur342,5,2026-02-23,"Très bonne expérience, cursus enrichissant. Équipe pédagogique au top, je recommande.",demo-63
+trustpilot,ESCP,Utilisateur347,3,2025-06-28,"Expérience moyenne, peut mieux faire. Quelques bons cours, d'autres moins intéressants.",demo-64
+google_maps,EDHEC,Utilisateur156,4,2025-10-21,"Équipe pédagogique au top, je recommande. Super campus et bonne ambiance.",demo-65
+google_maps,ESCP,Utilisateur262,3,2026-04-30,"Expérience moyenne, peut mieux faire. Correct sans plus.",demo-66
+trustpilot,EMLV,Utilisateur264,3,2026-11-11,"Expérience moyenne, peut mieux faire. Quelques bons cours, d'autres moins intéressants.",demo-67
+trustpilot,EMLV,Utilisateur116,4,2025-07-23,"Équipe pédagogique au top, je recommande. Excellent service, très réactif.",demo-68
+google_maps,EMLV,Utilisateur244,2,2026-09-18,"Administration injoignable, très décevant. Frais élevés pour un service médiocre.",demo-69
+trustpilot,EDHEC,Utilisateur254,5,2026-02-14,"Équipe pédagogique au top, je recommande. Excellent service, très réactif.",demo-70
+google_maps,EMLV,Utilisateur399,2,2026-03-12,"Frais élevés pour un service médiocre. Administration injoignable, très décevant.",demo-71
+google_maps,EDHEC,Utilisateur234,5,2025-05-17,"Super campus et bonne ambiance. Très bonne expérience, cursus enrichissant.",demo-72
+trustpilot,ESCP,Utilisateur314,4,2026-06-01,"Super campus et bonne ambiance. Très bonne expérience, cursus enrichissant.",demo-73
+trustpilot,EDHEC,Utilisateur231,5,2025-09-23,"Équipe pédagogique au top, je recommande. Très bonne expérience, cursus enrichissant.",demo-74
+trustpilot,ESCP,Utilisateur321,3,2025-09-02,"Quelques bons cours, d'autres moins intéressants. Expérience moyenne, peut mieux faire.",demo-75
+trustpilot,EMLV,Utilisateur164,3,2026-07-08,"Correct sans plus. Expérience moyenne, peut mieux faire.",demo-76
+google_maps,ESSEC,Utilisateur197,3,2025-06-06,"Expérience moyenne, peut mieux faire. Correct sans plus.",demo-77
+trustpilot,EMLV,Utilisateur213,2,2025-03-05,"Frais élevés pour un service médiocre. Aucune réponse à mes mails, nul.",demo-78
+google_maps,EDHEC,Utilisateur439,4,2026-08-13,"Super campus et bonne ambiance. Équipe pédagogique au top, je recommande.",demo-79
+trustpilot,EMLV,Utilisateur437,4,2026-03-06,"Équipe pédagogique au top, je recommande. Super campus et bonne ambiance.",demo-80
+trustpilot,ESSEC,Utilisateur224,4,2026-05-13,"Excellent service, très réactif. Équipe pédagogique au top, je recommande.",demo-81
+google_maps,ESCP,Utilisateur431,3,2026-04-24,"Correct sans plus. Expérience moyenne, peut mieux faire.",demo-82
+google_maps,EDHEC,Utilisateur43,2,2026-10-21,"Aucune réponse à mes mails, nul. Administration injoignable, très décevant.",demo-83
+trustpilot,EDHEC,Utilisateur109,4,2026-04-11,"Très bonne expérience, cursus enrichissant. Équipe pédagogique au top, je recommande.",demo-84
+trustpilot,EDHEC,Utilisateur386,5,2026-03-08,"Très bonne expérience, cursus enrichissant. Excellent service, très réactif.",demo-85
+trustpilot,EDHEC,Utilisateur115,5,2026-10-28,"Excellent service, très réactif. Très bonne expérience, cursus enrichissant.",demo-86
+google_maps,EMLV,Utilisateur487,3,2025-09-11,"Correct sans plus. Expérience moyenne, peut mieux faire.",demo-87
+google_maps,ESSEC,Utilisateur289,4,2025-08-12,"Super campus et bonne ambiance. Très bonne expérience, cursus enrichissant.",demo-88
+trustpilot,ESCP,Utilisateur86,5,2026-09-13,"Excellent service, très réactif. Super campus et bonne ambiance.",demo-89
+trustpilot,ESCP,Utilisateur295,4,2026-01-20,"Super campus et bonne ambiance. Très bonne expérience, cursus enrichissant.",demo-90
+google_maps,ESSEC,Utilisateur304,4,2026-10-05,"Équipe pédagogique au top, je recommande. Excellent service, très réactif.",demo-91
+google_maps,ESCP,Utilisateur408,5,2026-08-03,"Excellent service, très réactif. Équipe pédagogique au top, je recommande.",demo-92
+trustpilot,EDHEC,Utilisateur36,3,2026-06-03,"Expérience moyenne, peut mieux faire. Quelques bons cours, d'autres moins intéressants.",demo-93
+google_maps,EMLV,Utilisateur222,4,2026-01-06,"Super campus et bonne ambiance. Très bonne expérience, cursus enrichissant.",demo-94
+trustpilot,ESSEC,Utilisateur91,3,2026-06-19,"Expérience moyenne, peut mieux faire. Quelques bons cours, d'autres moins intéressants.",demo-95
+trustpilot,EDHEC,Utilisateur166,2,2025-09-09,"Administration injoignable, très décevant. Frais élevés pour un service médiocre.",demo-96
+google_maps,EDHEC,Utilisateur385,4,2026-04-21,"Super campus et bonne ambiance. Équipe pédagogique au top, je recommande.",demo-97
+trustpilot,EMLV,Utilisateur109,2,2025-12-30,"Organisation catastrophique, je déconseille. Frais élevés pour un service médiocre.",demo-98
+trustpilot,ESCP,Utilisateur285,4,2025-01-11,"Équipe pédagogique au top, je recommande. Excellent service, très réactif.",demo-99
+google_maps,ESSEC,Utilisateur354,4,2026-05-03,"Super campus et bonne ambiance. Équipe pédagogique au top, je recommande.",demo-100
+google_maps,EMLV,Utilisateur151,2,2025-08-15,"Aucune réponse à mes mails, nul. Organisation catastrophique, je déconseille.",demo-101
+trustpilot,ESSEC,Utilisateur284,4,2026-06-28,"Très bonne expérience, cursus enrichissant. Équipe pédagogique au top, je recommande.",demo-102
+trustpilot,ESCP,Utilisateur360,5,2026-04-10,"Très bonne expérience, cursus enrichissant. Équipe pédagogique au top, je recommande.",demo-103
+trustpilot,ESCP,Utilisateur62,4,2026-07-03,"Équipe pédagogique au top, je recommande. Excellent service, très réactif.",demo-104
+trustpilot,ESSEC,Utilisateur142,5,2026-08-27,"Très bonne expérience, cursus enrichissant. Excellent service, très réactif.",demo-105
+trustpilot,ESSEC,Utilisateur8,4,2026-07-01,"Équipe pédagogique au top, je recommande. Super campus et bonne ambiance.",demo-106
+google_maps,EMLV,Utilisateur284,4,2025-10-27,"Équipe pédagogique au top, je recommande. Très bonne expérience, cursus enrichissant.",demo-107
+trustpilot,EDHEC,Utilisateur241,4,2026-05-06,"Super campus et bonne ambiance. Équipe pédagogique au top, je recommande.",demo-108
+google_maps,ESSEC,Utilisateur130,4,2026-05-05,"Excellent service, très réactif. Super campus et bonne ambiance.",demo-109
+google_maps,EDHEC,Utilisateur78,2,2025-06-02,"Organisation catastrophique, je déconseille. Administration injoignable, très décevant.",demo-110
+google_maps,ESSEC,Utilisateur286,4,2026-03-03,"Équipe pédagogique au top, je recommande. Très bonne expérience, cursus enrichissant.",demo-111
+trustpilot,EDHEC,Utilisateur157,3,2026-08-06,"Expérience moyenne, peut mieux faire. Correct sans plus.",demo-112
+google_maps,EMLV,Utilisateur321,4,2025-08-05,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-113
+google_maps,EMLV,Utilisateur81,4,2025-01-03,"Super campus et bonne ambiance. Équipe pédagogique au top, je recommande.",demo-114
+trustpilot,EDHEC,Utilisateur17,4,2025-08-26,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-115
+google_maps,ESCP,Utilisateur474,4,2025-09-28,"Équipe pédagogique au top, je recommande. Super campus et bonne ambiance.",demo-116
+google_maps,EMLV,Utilisateur332,2,2025-06-02,"Organisation catastrophique, je déconseille. Administration injoignable, très décevant.",demo-117
+trustpilot,EMLV,Utilisateur225,5,2025-05-08,"Super campus et bonne ambiance. Très bonne expérience, cursus enrichissant.",demo-118
+trustpilot,ESCP,Utilisateur483,5,2025-10-06,"Super campus et bonne ambiance. Équipe pédagogique au top, je recommande.",demo-119
+trustpilot,EMLV,Utilisateur310,1,2025-09-14,"Administration injoignable, très décevant. Aucune réponse à mes mails, nul.",demo-120
+google_maps,ESSEC,Utilisateur392,3,2025-10-03,"Expérience moyenne, peut mieux faire. Correct sans plus.",demo-121
+trustpilot,ESSEC,Utilisateur93,3,2026-08-23,"Quelques bons cours, d'autres moins intéressants. Expérience moyenne, peut mieux faire.",demo-122
+trustpilot,EMLV,Utilisateur179,3,2026-02-23,"Quelques bons cours, d'autres moins intéressants. Expérience moyenne, peut mieux faire.",demo-123
+trustpilot,EMLV,Utilisateur148,4,2026-11-10,"Super campus et bonne ambiance. Très bonne expérience, cursus enrichissant.",demo-124
+trustpilot,EMLV,Utilisateur46,2,2025-11-19,"Organisation catastrophique, je déconseille. Frais élevés pour un service médiocre.",demo-125
+google_maps,EMLV,Utilisateur337,4,2026-07-10,"Super campus et bonne ambiance. Équipe pédagogique au top, je recommande.",demo-126
+google_maps,EMLV,Utilisateur266,3,2026-01-06,"Expérience moyenne, peut mieux faire. Quelques bons cours, d'autres moins intéressants.",demo-127
+google_maps,EDHEC,Utilisateur475,4,2025-10-22,"Super campus et bonne ambiance. Très bonne expérience, cursus enrichissant.",demo-128
+google_maps,EDHEC,Utilisateur15,3,2026-10-08,"Expérience moyenne, peut mieux faire. Correct sans plus.",demo-129
+trustpilot,ESSEC,Utilisateur48,4,2025-08-19,"Excellent service, très réactif. Équipe pédagogique au top, je recommande.",demo-130
+google_maps,EMLV,Utilisateur256,3,2025-10-26,"Expérience moyenne, peut mieux faire. Quelques bons cours, d'autres moins intéressants.",demo-131
+google_maps,EDHEC,Utilisateur234,5,2026-07-19,"Équipe pédagogique au top, je recommande. Super campus et bonne ambiance.",demo-132
+google_maps,ESSEC,Utilisateur443,2,2025-03-13,"Organisation catastrophique, je déconseille. Frais élevés pour un service médiocre.",demo-133
+google_maps,ESCP,Utilisateur145,5,2025-11-02,"Super campus et bonne ambiance. Excellent service, très réactif.",demo-134
+trustpilot,EDHEC,Utilisateur177,3,2025-12-07,"Expérience moyenne, peut mieux faire. Quelques bons cours, d'autres moins intéressants.",demo-135
+google_maps,EDHEC,Utilisateur293,5,2026-01-28,"Équipe pédagogique au top, je recommande. Super campus et bonne ambiance.",demo-136
+trustpilot,EMLV,Utilisateur382,2,2026-04-30,"Aucune réponse à mes mails, nul. Frais élevés pour un service médiocre.",demo-137
+trustpilot,ESSEC,Utilisateur446,4,2025-04-13,"Super campus et bonne ambiance. Excellent service, très réactif.",demo-138
+google_maps,EDHEC,Utilisateur370,4,2025-05-28,"Super campus et bonne ambiance. Très bonne expérience, cursus enrichissant.",demo-139
+trustpilot,ESSEC,Utilisateur174,5,2026-10-01,"Super campus et bonne ambiance. Très bonne expérience, cursus enrichissant.",demo-140
+trustpilot,EMLV,Utilisateur437,4,2026-07-01,"Super campus et bonne ambiance. Équipe pédagogique au top, je recommande.",demo-141
+google_maps,EDHEC,Utilisateur121,4,2026-10-09,"Très bonne expérience, cursus enrichissant. Excellent service, très réactif.",demo-142
+trustpilot,EMLV,Utilisateur51,3,2026-10-11,"Expérience moyenne, peut mieux faire. Correct sans plus.",demo-143
+google_maps,EDHEC,Utilisateur24,4,2025-11-29,"Excellent service, très réactif. Équipe pédagogique au top, je recommande.",demo-144
+trustpilot,ESCP,Utilisateur221,5,2025-05-30,"Équipe pédagogique au top, je recommande. Très bonne expérience, cursus enrichissant.",demo-145
+google_maps,EDHEC,Utilisateur90,2,2025-03-22,"Aucune réponse à mes mails, nul. Organisation catastrophique, je déconseille.",demo-146
+trustpilot,ESSEC,Utilisateur468,3,2026-08-21,"Correct sans plus. Expérience moyenne, peut mieux faire.",demo-147
+google_maps,EDHEC,Utilisateur461,3,2026-04-22,"Quelques bons cours, d'autres moins intéressants. Correct sans plus.",demo-148
+trustpilot,EMLV,Utilisateur484,2,2025-12-20,"Organisation catastrophique, je déconseille. Aucune réponse à mes mails, nul.",demo-149
+trustpilot,EDHEC,Utilisateur102,3,2026-01-29,"Quelques bons cours, d'autres moins intéressants. Correct sans plus.",demo-150
+trustpilot,ESSEC,Utilisateur293,3,2026-01-03,"Expérience moyenne, peut mieux faire. Quelques bons cours, d'autres moins intéressants.",demo-151
+trustpilot,ESCP,Utilisateur141,5,2025-01-09,"Excellent service, très réactif. Très bonne expérience, cursus enrichissant.",demo-152
+trustpilot,EDHEC,Utilisateur398,4,2025-08-24,"Très bonne expérience, cursus enrichissant. Excellent service, très réactif.",demo-153
+google_maps,ESSEC,Utilisateur322,3,2025-04-10,"Expérience moyenne, peut mieux faire. Correct sans plus.",demo-154
+trustpilot,ESCP,Utilisateur18,3,2026-08-17,"Quelques bons cours, d'autres moins intéressants. Correct sans plus.",demo-155
+trustpilot,EMLV,Utilisateur90,4,2025-07-25,"Équipe pédagogique au top, je recommande. Très bonne expérience, cursus enrichissant.",demo-156
+trustpilot,ESCP,Utilisateur426,3,2025-06-18,"Quelques bons cours, d'autres moins intéressants. Expérience moyenne, peut mieux faire.",demo-157
+google_maps,ESCP,Utilisateur240,4,2025-03-19,"Équipe pédagogique au top, je recommande. Excellent service, très réactif.",demo-158
+trustpilot,EDHEC,Utilisateur47,3,2026-02-09,"Correct sans plus. Quelques bons cours, d'autres moins intéressants.",demo-159
+trustpilot,EMLV,Utilisateur300,2,2026-01-26,"Organisation catastrophique, je déconseille. Administration injoignable, très décevant.",demo-160
+trustpilot,ESSEC,Utilisateur13,5,2026-09-27,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-161
+trustpilot,ESSEC,Utilisateur466,3,2025-11-06,"Expérience moyenne, peut mieux faire. Quelques bons cours, d'autres moins intéressants.",demo-162
+google_maps,EMLV,Utilisateur24,2,2025-02-08,"Organisation catastrophique, je déconseille. Frais élevés pour un service médiocre.",demo-163
+google_maps,EMLV,Utilisateur199,5,2026-04-10,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-164
+google_maps,EDHEC,Utilisateur454,5,2026-03-01,"Excellent service, très réactif. Équipe pédagogique au top, je recommande.",demo-165
+trustpilot,EDHEC,Utilisateur112,5,2026-03-31,"Super campus et bonne ambiance. Excellent service, très réactif.",demo-166
+google_maps,ESCP,Utilisateur352,4,2026-01-12,"Très bonne expérience, cursus enrichissant. Excellent service, très réactif.",demo-167
+trustpilot,EDHEC,Utilisateur47,3,2026-11-10,"Correct sans plus. Expérience moyenne, peut mieux faire.",demo-168
+trustpilot,EMLV,Utilisateur125,5,2025-05-09,"Équipe pédagogique au top, je recommande. Excellent service, très réactif.",demo-169
+google_maps,ESSEC,Utilisateur169,2,2025-06-01,"Administration injoignable, très décevant. Frais élevés pour un service médiocre.",demo-170
+google_maps,ESSEC,Utilisateur277,3,2025-09-14,"Correct sans plus. Expérience moyenne, peut mieux faire.",demo-171
+google_maps,EMLV,Utilisateur302,4,2025-11-28,"Excellent service, très réactif. Super campus et bonne ambiance.",demo-172
+google_maps,ESCP,Utilisateur65,5,2026-03-08,"Excellent service, très réactif. Très bonne expérience, cursus enrichissant.",demo-173
+google_maps,EMLV,Utilisateur232,1,2026-05-31,"Frais élevés pour un service médiocre. Organisation catastrophique, je déconseille.",demo-174
+trustpilot,EMLV,Utilisateur235,3,2026-10-21,"Correct sans plus. Expérience moyenne, peut mieux faire.",demo-175
+google_maps,EDHEC,Utilisateur252,4,2026-03-31,"Excellent service, très réactif. Super campus et bonne ambiance.",demo-176
+google_maps,ESCP,Utilisateur34,3,2025-05-10,"Quelques bons cours, d'autres moins intéressants. Expérience moyenne, peut mieux faire.",demo-177
+trustpilot,EDHEC,Utilisateur259,5,2026-09-12,"Super campus et bonne ambiance. Excellent service, très réactif.",demo-178
+google_maps,EMLV,Utilisateur221,3,2026-04-08,"Correct sans plus. Quelques bons cours, d'autres moins intéressants.",demo-179
+google_maps,ESCP,Utilisateur161,5,2026-03-14,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-180
+trustpilot,ESCP,Utilisateur489,3,2025-06-06,"Expérience moyenne, peut mieux faire. Quelques bons cours, d'autres moins intéressants.",demo-181
+trustpilot,EMLV,Utilisateur50,4,2026-01-17,"Équipe pédagogique au top, je recommande. Très bonne expérience, cursus enrichissant.",demo-182
+trustpilot,EMLV,Utilisateur344,3,2025-05-06,"Quelques bons cours, d'autres moins intéressants. Expérience moyenne, peut mieux faire.",demo-183
+trustpilot,EDHEC,Utilisateur308,5,2025-11-16,"Très bonne expérience, cursus enrichissant. Excellent service, très réactif.",demo-184
+google_maps,ESSEC,Utilisateur337,3,2026-05-09,"Correct sans plus. Expérience moyenne, peut mieux faire.",demo-185
+trustpilot,ESCP,Utilisateur294,5,2025-08-20,"Super campus et bonne ambiance. Très bonne expérience, cursus enrichissant.",demo-186
+trustpilot,EMLV,Utilisateur15,2,2025-07-04,"Organisation catastrophique, je déconseille. Aucune réponse à mes mails, nul.",demo-187
+google_maps,ESCP,Utilisateur446,5,2025-05-27,"Super campus et bonne ambiance. Excellent service, très réactif.",demo-188
+google_maps,ESSEC,Utilisateur47,4,2026-06-28,"Équipe pédagogique au top, je recommande. Super campus et bonne ambiance.",demo-189
+trustpilot,EDHEC,Utilisateur370,3,2025-11-29,"Expérience moyenne, peut mieux faire. Correct sans plus.",demo-190
+google_maps,EMLV,Utilisateur81,3,2026-09-25,"Correct sans plus. Expérience moyenne, peut mieux faire.",demo-191
+trustpilot,ESCP,Utilisateur213,3,2025-10-07,"Correct sans plus. Expérience moyenne, peut mieux faire.",demo-192
+trustpilot,ESCP,Utilisateur57,4,2025-10-18,"Super campus et bonne ambiance. Très bonne expérience, cursus enrichissant.",demo-193
+google_maps,ESCP,Utilisateur4,5,2025-07-29,"Très bonne expérience, cursus enrichissant. Excellent service, très réactif.",demo-194
+trustpilot,ESSEC,Utilisateur149,5,2025-12-02,"Excellent service, très réactif. Super campus et bonne ambiance.",demo-195
+trustpilot,EDHEC,Utilisateur273,4,2025-08-24,"Très bonne expérience, cursus enrichissant. Excellent service, très réactif.",demo-196
+google_maps,EDHEC,Utilisateur224,3,2025-01-20,"Quelques bons cours, d'autres moins intéressants. Correct sans plus.",demo-197
+trustpilot,ESCP,Utilisateur149,3,2025-04-28,"Quelques bons cours, d'autres moins intéressants. Correct sans plus.",demo-198
+google_maps,ESCP,Utilisateur411,3,2026-09-25,"Quelques bons cours, d'autres moins intéressants. Expérience moyenne, peut mieux faire.",demo-199
+trustpilot,EMLV,Utilisateur302,3,2026-02-15,"Expérience moyenne, peut mieux faire. Correct sans plus.",demo-200
+trustpilot,EDHEC,Utilisateur382,4,2025-12-14,"Équipe pédagogique au top, je recommande. Super campus et bonne ambiance.",demo-201
+google_maps,ESSEC,Utilisateur464,5,2025-12-24,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-202
+google_maps,ESSEC,Utilisateur53,5,2025-05-30,"Très bonne expérience, cursus enrichissant. Excellent service, très réactif.",demo-203
+google_maps,ESSEC,Utilisateur91,3,2026-10-06,"Quelques bons cours, d'autres moins intéressants. Expérience moyenne, peut mieux faire.",demo-204
+trustpilot,EDHEC,Utilisateur443,3,2026-10-05,"Quelques bons cours, d'autres moins intéressants. Correct sans plus.",demo-205
+trustpilot,EDHEC,Utilisateur408,5,2025-10-09,"Excellent service, très réactif. Équipe pédagogique au top, je recommande.",demo-206
+trustpilot,EMLV,Utilisateur237,4,2026-04-08,"Excellent service, très réactif. Super campus et bonne ambiance.",demo-207
+google_maps,ESCP,Utilisateur315,4,2026-09-01,"Super campus et bonne ambiance. Équipe pédagogique au top, je recommande.",demo-208
+trustpilot,EMLV,Utilisateur466,3,2026-08-09,"Expérience moyenne, peut mieux faire. Correct sans plus.",demo-209
+google_maps,ESCP,Utilisateur231,3,2025-04-16,"Quelques bons cours, d'autres moins intéressants. Correct sans plus.",demo-210
+google_maps,ESSEC,Utilisateur127,3,2026-03-25,"Quelques bons cours, d'autres moins intéressants. Correct sans plus.",demo-211
+trustpilot,ESCP,Utilisateur397,3,2025-12-13,"Expérience moyenne, peut mieux faire. Correct sans plus.",demo-212
+google_maps,ESCP,Utilisateur169,5,2025-04-07,"Super campus et bonne ambiance. Équipe pédagogique au top, je recommande.",demo-213
+google_maps,ESCP,Utilisateur171,4,2025-03-25,"Équipe pédagogique au top, je recommande. Super campus et bonne ambiance.",demo-214
+trustpilot,ESCP,Utilisateur67,2,2026-09-02,"Administration injoignable, très décevant. Frais élevés pour un service médiocre.",demo-215
+google_maps,EDHEC,Utilisateur344,3,2026-06-24,"Correct sans plus. Quelques bons cours, d'autres moins intéressants.",demo-216
+google_maps,ESCP,Utilisateur186,3,2025-11-13,"Correct sans plus. Expérience moyenne, peut mieux faire.",demo-217
+google_maps,ESCP,Utilisateur71,5,2025-06-08,"Excellent service, très réactif. Équipe pédagogique au top, je recommande.",demo-218
+google_maps,EMLV,Utilisateur339,3,2025-12-11,"Expérience moyenne, peut mieux faire. Correct sans plus.",demo-219
+google_maps,EDHEC,Utilisateur370,4,2026-03-25,"Excellent service, très réactif. Équipe pédagogique au top, je recommande.",demo-220
+google_maps,ESCP,Utilisateur497,5,2026-03-31,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-221
+trustpilot,EDHEC,Utilisateur463,4,2025-07-18,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-222
+trustpilot,EDHEC,Utilisateur394,5,2025-10-16,"Super campus et bonne ambiance. Très bonne expérience, cursus enrichissant.",demo-223
+google_maps,EDHEC,Utilisateur447,5,2025-09-14,"Excellent service, très réactif. Très bonne expérience, cursus enrichissant.",demo-224
+trustpilot,EDHEC,Utilisateur284,3,2025-04-16,"Expérience moyenne, peut mieux faire. Correct sans plus.",demo-225
+trustpilot,ESCP,Utilisateur464,5,2026-06-10,"Équipe pédagogique au top, je recommande. Super campus et bonne ambiance.",demo-226
+google_maps,EMLV,Utilisateur419,4,2026-04-07,"Très bonne expérience, cursus enrichissant. Excellent service, très réactif.",demo-227
+google_maps,EDHEC,Utilisateur198,5,2025-03-25,"Très bonne expérience, cursus enrichissant. Excellent service, très réactif.",demo-228
+trustpilot,EMLV,Utilisateur477,4,2025-04-12,"Très bonne expérience, cursus enrichissant. Excellent service, très réactif.",demo-229
+trustpilot,ESSEC,Utilisateur357,5,2025-05-23,"Super campus et bonne ambiance. Équipe pédagogique au top, je recommande.",demo-230
+google_maps,EMLV,Utilisateur10,4,2025-09-20,"Équipe pédagogique au top, je recommande. Excellent service, très réactif.",demo-231
+trustpilot,EDHEC,Utilisateur63,4,2025-02-18,"Équipe pédagogique au top, je recommande. Super campus et bonne ambiance.",demo-232
+google_maps,EDHEC,Utilisateur57,4,2026-05-27,"Excellent service, très réactif. Très bonne expérience, cursus enrichissant.",demo-233
+google_maps,ESSEC,Utilisateur315,4,2025-12-28,"Équipe pédagogique au top, je recommande. Très bonne expérience, cursus enrichissant.",demo-234
+google_maps,EDHEC,Utilisateur341,3,2025-03-29,"Expérience moyenne, peut mieux faire. Quelques bons cours, d'autres moins intéressants.",demo-235
+google_maps,EMLV,Utilisateur200,5,2026-04-27,"Excellent service, très réactif. Très bonne expérience, cursus enrichissant.",demo-236
+trustpilot,EDHEC,Utilisateur130,3,2025-01-17,"Quelques bons cours, d'autres moins intéressants. Correct sans plus.",demo-237
+google_maps,ESCP,Utilisateur396,4,2026-08-19,"Très bonne expérience, cursus enrichissant. Excellent service, très réactif.",demo-238
+trustpilot,EMLV,Utilisateur280,5,2025-12-13,"Équipe pédagogique au top, je recommande. Très bonne expérience, cursus enrichissant.",demo-239
+google_maps,EDHEC,Utilisateur416,5,2025-05-19,"Excellent service, très réactif. Très bonne expérience, cursus enrichissant.",demo-240
+google_maps,EDHEC,Utilisateur151,4,2025-07-26,"Excellent service, très réactif. Super campus et bonne ambiance.",demo-241
+trustpilot,EMLV,Utilisateur418,3,2026-07-11,"Quelques bons cours, d'autres moins intéressants. Expérience moyenne, peut mieux faire.",demo-242
+google_maps,EMLV,Utilisateur147,4,2026-01-01,"Excellent service, très réactif. Très bonne expérience, cursus enrichissant.",demo-243
+trustpilot,ESCP,Utilisateur456,4,2026-02-14,"Super campus et bonne ambiance. Équipe pédagogique au top, je recommande.",demo-244
+google_maps,ESCP,Utilisateur255,5,2026-05-25,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-245
+google_maps,ESCP,Utilisateur221,5,2026-09-09,"Équipe pédagogique au top, je recommande. Très bonne expérience, cursus enrichissant.",demo-246
+trustpilot,ESCP,Utilisateur53,2,2025-03-23,"Organisation catastrophique, je déconseille. Aucune réponse à mes mails, nul.",demo-247
+trustpilot,ESCP,Utilisateur86,3,2026-03-31,"Quelques bons cours, d'autres moins intéressants. Expérience moyenne, peut mieux faire.",demo-248
+trustpilot,EMLV,Utilisateur315,5,2026-03-22,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-249
+trustpilot,EMLV,Utilisateur263,5,2025-06-13,"Excellent service, très réactif. Super campus et bonne ambiance.",demo-250
+google_maps,EDHEC,Utilisateur65,5,2025-03-10,"Équipe pédagogique au top, je recommande. Très bonne expérience, cursus enrichissant.",demo-251
+google_maps,ESCP,Utilisateur310,2,2025-06-07,"Aucune réponse à mes mails, nul. Frais élevés pour un service médiocre.",demo-252
+trustpilot,ESCP,Utilisateur391,5,2025-03-20,"Équipe pédagogique au top, je recommande. Très bonne expérience, cursus enrichissant.",demo-253
+google_maps,ESCP,Utilisateur492,3,2025-04-27,"Correct sans plus. Expérience moyenne, peut mieux faire.",demo-254
+trustpilot,EDHEC,Utilisateur468,5,2026-07-30,"Excellent service, très réactif. Équipe pédagogique au top, je recommande.",demo-255
+trustpilot,ESCP,Utilisateur356,4,2026-05-18,"Équipe pédagogique au top, je recommande. Excellent service, très réactif.",demo-256
+google_maps,ESSEC,Utilisateur232,3,2025-06-26,"Expérience moyenne, peut mieux faire. Quelques bons cours, d'autres moins intéressants.",demo-257
+trustpilot,EMLV,Utilisateur342,4,2025-12-22,"Excellent service, très réactif. Très bonne expérience, cursus enrichissant.",demo-258
+trustpilot,ESCP,Utilisateur436,1,2025-06-11,"Frais élevés pour un service médiocre. Aucune réponse à mes mails, nul.",demo-259
+google_maps,ESSEC,Utilisateur122,5,2026-05-21,"Excellent service, très réactif. Équipe pédagogique au top, je recommande.",demo-260
+trustpilot,ESCP,Utilisateur412,5,2026-07-19,"Équipe pédagogique au top, je recommande. Très bonne expérience, cursus enrichissant.",demo-261
+trustpilot,EMLV,Utilisateur270,4,2026-02-25,"Super campus et bonne ambiance. Très bonne expérience, cursus enrichissant.",demo-262
+google_maps,EMLV,Utilisateur498,4,2025-11-21,"Excellent service, très réactif. Équipe pédagogique au top, je recommande.",demo-263
+google_maps,EDHEC,Utilisateur394,3,2025-05-13,"Quelques bons cours, d'autres moins intéressants. Correct sans plus.",demo-264
+google_maps,EMLV,Utilisateur156,2,2025-06-18,"Frais élevés pour un service médiocre. Aucune réponse à mes mails, nul.",demo-265
+trustpilot,ESSEC,Utilisateur434,3,2025-03-22,"Quelques bons cours, d'autres moins intéressants. Correct sans plus.",demo-266
+google_maps,ESCP,Utilisateur321,5,2025-11-07,"Excellent service, très réactif. Très bonne expérience, cursus enrichissant.",demo-267
+google_maps,ESSEC,Utilisateur338,3,2026-10-02,"Expérience moyenne, peut mieux faire. Quelques bons cours, d'autres moins intéressants.",demo-268
+google_maps,EMLV,Utilisateur42,2,2025-02-16,"Organisation catastrophique, je déconseille. Aucune réponse à mes mails, nul.",demo-269
+google_maps,ESSEC,Utilisateur255,4,2026-10-05,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-270
+trustpilot,ESCP,Utilisateur126,3,2026-02-20,"Quelques bons cours, d'autres moins intéressants. Expérience moyenne, peut mieux faire.",demo-271
+trustpilot,EMLV,Utilisateur248,3,2026-04-21,"Correct sans plus. Quelques bons cours, d'autres moins intéressants.",demo-272
+trustpilot,ESSEC,Utilisateur442,4,2025-11-23,"Très bonne expérience, cursus enrichissant. Équipe pédagogique au top, je recommande.",demo-273
+google_maps,ESSEC,Utilisateur164,4,2025-09-05,"Super campus et bonne ambiance. Excellent service, très réactif.",demo-274
+trustpilot,ESCP,Utilisateur127,3,2025-05-25,"Correct sans plus. Expérience moyenne, peut mieux faire.",demo-275
+trustpilot,ESCP,Utilisateur128,5,2025-06-13,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-276
+google_maps,ESCP,Utilisateur391,3,2025-06-13,"Quelques bons cours, d'autres moins intéressants. Expérience moyenne, peut mieux faire.",demo-277
+google_maps,EDHEC,Utilisateur484,5,2026-02-07,"Super campus et bonne ambiance. Excellent service, très réactif.",demo-278
+trustpilot,ESSEC,Utilisateur25,3,2025-02-21,"Quelques bons cours, d'autres moins intéressants. Expérience moyenne, peut mieux faire.",demo-279
+google_maps,EDHEC,Utilisateur221,4,2025-05-18,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-280
+trustpilot,ESCP,Utilisateur188,4,2025-02-16,"Super campus et bonne ambiance. Excellent service, très réactif.",demo-281
+trustpilot,ESSEC,Utilisateur259,4,2026-04-07,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-282
+google_maps,EMLV,Utilisateur500,4,2025-04-10,"Super campus et bonne ambiance. Équipe pédagogique au top, je recommande.",demo-283
+google_maps,ESCP,Utilisateur102,3,2026-09-09,"Expérience moyenne, peut mieux faire. Quelques bons cours, d'autres moins intéressants.",demo-284
+google_maps,EMLV,Utilisateur20,3,2025-05-21,"Expérience moyenne, peut mieux faire. Quelques bons cours, d'autres moins intéressants.",demo-285
+google_maps,EDHEC,Utilisateur168,3,2026-09-20,"Quelques bons cours, d'autres moins intéressants. Correct sans plus.",demo-286
+trustpilot,EDHEC,Utilisateur304,4,2025-12-11,"Super campus et bonne ambiance. Très bonne expérience, cursus enrichissant.",demo-287
+trustpilot,ESCP,Utilisateur345,4,2025-04-23,"Super campus et bonne ambiance. Très bonne expérience, cursus enrichissant.",demo-288
+google_maps,ESCP,Utilisateur306,4,2026-05-01,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-289
+google_maps,ESSEC,Utilisateur269,4,2026-10-07,"Super campus et bonne ambiance. Excellent service, très réactif.",demo-290
+google_maps,ESSEC,Utilisateur294,3,2025-04-23,"Correct sans plus. Expérience moyenne, peut mieux faire.",demo-291
+google_maps,EDHEC,Utilisateur211,4,2026-05-29,"Super campus et bonne ambiance. Très bonne expérience, cursus enrichissant.",demo-292
+google_maps,EMLV,Utilisateur266,4,2025-08-01,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-293
+google_maps,EDHEC,Utilisateur236,3,2026-06-30,"Quelques bons cours, d'autres moins intéressants. Expérience moyenne, peut mieux faire.",demo-294
+trustpilot,ESCP,Utilisateur99,4,2025-09-10,"Très bonne expérience, cursus enrichissant. Super campus et bonne ambiance.",demo-295
+trustpilot,ESCP,Utilisateur395,4,2025-10-23,"Équipe pédagogique au top, je recommande. Très bonne expérience, cursus enrichissant.",demo-296
+trustpilot,EDHEC,Utilisateur246,5,2025-12-24,"Très bonne expérience, cursus enrichissant. Équipe pédagogique au top, je recommande.",demo-297
+trustpilot,EMLV,Utilisateur420,2,2025-12-20,"Frais élevés pour un service médiocre. Aucune réponse à mes mails, nul.",demo-298
+trustpilot,EMLV,Utilisateur490,3,2025-03-22,"Quelques bons cours, d'autres moins intéressants. Expérience moyenne, peut mieux faire.",demo-299
