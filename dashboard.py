@@ -10,40 +10,54 @@ import streamlit as st
 
 from avis_pipeline import analyse, ia, stockage
 
-PALETTE = {"positif": "#2ecc9a", "neutre": "#8b93a7", "négatif": "#ff5c7a"}
-SEQ = ["#7c5cff", "#2ec4ff", "#2ecc9a", "#ffb84d", "#ff5c7a", "#c77dff", "#4dd6c1"]
+PALETTE = {"positif": "#10b981", "neutre": "#94a3b8", "négatif": "#f0616d"}
+SEQ = ["#2563eb", "#10b981", "#38bdf8", "#14b8a6", "#6366f1", "#f59e0b", "#64748b"]
+ECHELLE_NOTE = ["#f0616d", "#fbbf24", "#10b981"]  # rouge → jaune → vert
+px.defaults.color_discrete_sequence = SEQ  # palette bleu/vert pour tous les graphiques
 
 st.set_page_config(page_title="Observatoire d'avis", page_icon="📊", layout="wide")
 st.markdown("""
 <style>
-.block-container {padding-top: 2rem; max-width: 1400px;}
-h1 {background: linear-gradient(90deg,#7c5cff,#2ec4ff); -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; font-weight: 800;}
-div[data-testid="stMetric"] {background:#1a1f2e; border:1px solid #2a3147; border-radius:14px;
-    padding:14px 18px; box-shadow:0 2px 12px rgba(0,0,0,.25);}
-div[data-testid="stMetricLabel"] {opacity:.7;}
-button[data-baseweb="tab"] {font-weight:600;}
+.block-container {padding-top: 1.2rem; max-width: 1400px;}
+.bandeau {background: linear-gradient(110deg,#1d4ed8 0%,#2563eb 45%,#10b981 130%); border-radius: 18px;
+    padding: 26px 32px; margin-bottom: 18px; color: #fff; box-shadow: 0 8px 24px rgba(37,99,235,.22);}
+.bandeau h1 {margin:0; font-size: 2rem; font-weight: 800; color:#fff; padding:0;}
+.bandeau p {margin:6px 0 0; opacity:.92; font-size:.98rem;}
+.pastille {display:inline-block; background:rgba(255,255,255,.18); border-radius:999px; padding:3px 12px;
+    font-size:.78rem; margin:10px 6px 0 0; font-weight:600;}
+div[data-testid="stMetric"] {background:#fff; border:1px solid #e1e8f2; border-left:5px solid #2563eb;
+    border-radius:12px; padding:12px 18px; box-shadow:0 1px 6px rgba(20,35,59,.06);}
+div[data-testid="stMetric"]:nth-child(3n) {border-left-color:#10b981;}
+div[data-testid="stMetricLabel"] {color:#5b6b82;}
+section[data-testid="stSidebar"] {border-right:1px solid #e1e8f2;}
+button[data-baseweb="tab"] {font-weight:600; color:#41536d;}
+button[data-baseweb="tab"][aria-selected="true"] {color:#2563eb;}
+div[data-testid="stPlotlyChart"] {background:#fff; border:1px solid #e1e8f2; border-radius:14px; padding:6px;
+    box-shadow:0 1px 6px rgba(20,35,59,.05);}
 </style>""", unsafe_allow_html=True)
 
 
 def style(fig, hauteur: int = 380):
     """Applique un style sombre cohérent à une figure Plotly."""
-    fig.update_layout(template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                      height=hauteur, margin=dict(l=10, r=10, t=50, b=10), colorway=SEQ,
-                      legend=dict(orientation="h", y=-0.2))
+    fig.update_layout(template="plotly_white", paper_bgcolor="#ffffff", plot_bgcolor="#ffffff",
+                      font=dict(color="#14233b"), height=hauteur, margin=dict(l=10, r=10, t=50, b=10),
+                      colorway=SEQ, legend=dict(orientation="h", y=-0.2),
+                      title=dict(font=dict(size=15, color="#14233b")))
     return fig
 
 
 @st.cache_data(show_spinner="Analyse des messages…")
 def charger() -> pd.DataFrame:
     """Charge la base, calcule sentiments et thèmes (mis en cache)."""
-    df = analyse.ajouter_sentiments(stockage.charger_avis())
+    df = analyse.ajouter_sentiments(analyse.nettoyer_donnees(stockage.charger_avis()))
     return analyse.detecter_themes(df) if len(df) else df
 
 
 df = charger()
-st.title("📊 Observatoire d'avis")
-st.caption("Pipeline Python : API publiques (Mastodon, Lemmy) → SQLite → pandas/NLP → Streamlit")
+st.markdown("""<div class="bandeau"><h1>📊 Observatoire d'avis</h1>
+<p>Ce que les gens disent vraiment — collecte, analyse NLP et synthèse IA en temps réel.</p>
+<span class="pastille">Mastodon</span><span class="pastille">Lemmy</span><span class="pastille">SQLite</span>
+<span class="pastille">pandas · scikit-learn</span><span class="pastille">Claude</span></div>""", unsafe_allow_html=True)
 if df.empty:
     st.warning("Base vide. Lancez : `python -m avis_pipeline.cli` (ou `--demo`).")
     st.stop()
@@ -96,7 +110,7 @@ with onglets[0]:
                                 title="Volume par sujet et source")), width="stretch")
     moy = f.groupby("sujet")["note_finale"].mean().sort_values().reset_index()
     d.plotly_chart(style(px.bar(moy, x="note_finale", y="sujet", orientation="h", color="note_finale",
-                                color_continuous_scale=["#ff5c7a", "#ffb84d", "#2ecc9a"], range_color=[1, 5],
+                                color_continuous_scale=ECHELLE_NOTE, range_color=[1, 5],
                                 title="Note moyenne par sujet")), width="stretch")
 
 with onglets[1]:
@@ -109,7 +123,7 @@ with onglets[1]:
     b.plotly_chart(style(px.area(evo, x="periode", y="nb_avis", color="sujet",
                                  title="Volume de messages")), width="stretch")
     heat = analyse.heatmap_activite(f)
-    st.plotly_chart(style(px.imshow(heat, aspect="auto", color_continuous_scale="Purples",
+    st.plotly_chart(style(px.imshow(heat, aspect="auto", color_continuous_scale=["#eff6ff", "#93c5fd", "#2563eb"],
                                     labels=dict(x="Heure", y="Jour", color="Messages"),
                                     title="Quand les gens s'expriment (jour × heure)"), 340), width="stretch")
 
@@ -137,7 +151,7 @@ with onglets[3]:
     th = f.groupby("theme").agg(messages=("id", "count"), note=("note_finale", "mean")).reset_index()
     a, b = st.columns(2)
     a.plotly_chart(style(px.treemap(th, path=["theme"], values="messages", color="note",
-                                    color_continuous_scale=["#ff5c7a", "#ffb84d", "#2ecc9a"], range_color=[1, 5],
+                                    color_continuous_scale=ECHELLE_NOTE, range_color=[1, 5],
                                     title="Thèmes détectés (taille = volume, couleur = note)")), width="stretch")
     croise = f.groupby(["theme", "sujet"]).size().reset_index(name="messages")
     b.plotly_chart(style(px.bar(croise, x="messages", y="theme", color="sujet", orientation="h",
@@ -149,7 +163,7 @@ with onglets[4]:
     a, b = st.columns(2)
     aut = analyse.top_auteurs(f, 15)
     a.plotly_chart(style(px.bar(aut, x="messages", y="auteur", orientation="h", color="sentiment",
-                                color_continuous_scale=["#ff5c7a", "#8b93a7", "#2ecc9a"], range_color=[-1, 1],
+                                color_continuous_scale=["#f0616d", "#cbd5e1", "#10b981"], range_color=[-1, 1],
                                 title="Auteurs les plus actifs"), 480), width="stretch")
     b.plotly_chart(style(px.scatter(f, x="sentiment_naif", y="engagement", color="famille_source", opacity=.6,
                                     log_y=True, hover_data=["auteur"],

@@ -27,9 +27,22 @@ NEGATIONS = {"pas", "jamais", "aucun", "aucune", "ni", "plus", "guère"}
 JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
 
 
+MOTIF_URL = re.compile(r"https?://\S+|www\.\S+|\b\S+\.(?:com|fr|net|org|info|php|html)\S*", re.I)
+MOTIF_BOT = re.compile(r"automated archive|made with .*bot|\bbot\b.*original post|\[bot\]", re.I)
+MOTS_VIDES |= {"spip", "php", "net", "org", "article", "rticle", "lang", "post", "original", "posted", "bot",
+               "automated", "archive", "made", "online", "ligne", "lire", "voir", "via"}
+
+
+def nettoyer_donnees(df: pd.DataFrame) -> pd.DataFrame:
+    """Retire les messages de robots et les doublons de texte avant l'analyse."""
+    masque_bot = df["texte"].str.contains(MOTIF_BOT, na=False)
+    return df[~masque_bot].drop_duplicates(subset=["sujet", "texte"]).reset_index(drop=True)
+
+
 def tokeniser(texte: str) -> list[str]:
-    """Découpe un texte en mots minuscules sans mots vides."""
-    mots = re.findall(r"[a-zàâçéèêëîïôûùüÿœ']+", (texte or "").lower())
+    """Découpe un texte en mots minuscules, sans URL ni mots vides."""
+    texte = MOTIF_URL.sub(" ", texte or "")
+    mots = re.findall(r"[a-zàâçéèêëîïôûùüÿœ']+", texte.lower())
     return [m for m in mots if m not in MOTS_VIDES and len(m) > 2]
 
 
@@ -153,7 +166,7 @@ def nuage_de_mots(textes):
     """Construit une image de nuage de mots à partir de textes français."""
     from wordcloud import WordCloud
     texte = " ".join(m for t in textes for m in tokeniser(t)) or "vide"
-    return WordCloud(width=1000, height=420, background_color="#0e1117", colormap="cool",
+    return WordCloud(width=1000, height=420, background_color="white", colormap="winter",
                      max_words=120).generate(texte).to_image()
 
 

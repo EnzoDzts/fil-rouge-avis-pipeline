@@ -99,3 +99,9 @@ def collecte_df():
     base["date"] = pd.to_datetime(base["date"])
     base["id"] = range(len(base))
     return base
+
+
+def test_nettoyage_bots_et_urls():
+    df = pd.DataFrame({"sujet": ["a", "a", "a"], "texte": ["Automated archive made with bot", "vrai avis", "vrai avis"]})
+    assert list(analyse.nettoyer_donnees(df)["texte"]) == ["vrai avis"]
+    assert "spip" not in analyse.tokeniser("voir https://x.fr/spip.php?article1 train")
