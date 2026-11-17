@@ -41,14 +41,14 @@ col3.metric("Sentiment moyen (VADER)", f"{filtre['sentiment_vader'].mean():.2f}"
 
 g1, g2 = st.columns(2)
 g1.plotly_chart(px.histogram(filtre, x="note", color="entreprise", barmode="group",
-                             title="Distribution des notes"), use_container_width=True)
+                             title="Distribution des notes"), width="stretch")
 g2.plotly_chart(px.line(analyse.evolution_mensuelle(filtre), x="mois", y="note_moyenne", color="entreprise",
-                        title="Évolution mensuelle de la note moyenne"), use_container_width=True)
+                        title="Évolution mensuelle de la note moyenne"), width="stretch")
 
 mots = analyse.top_mots(filtre["texte"], 15)
 st.plotly_chart(px.bar(x=[m for m, _ in mots], y=[c for _, c in mots],
                        labels={"x": "Mot", "y": "Occurrences"}, title="Mots les plus fréquents"),
-                use_container_width=True)
+                width="stretch")
 
 st.subheader("Synthèse IA")
 st.write(ia.synthese_hebdo(filtre))
