@@ -94,9 +94,11 @@ k[4].metric("Engagement total", f"{int(f['engagement'].sum()):,}".replace(",", "
 for ligne in analyse.alertes(f).itertuples():
     st.error(f"🚨 Alerte : « {ligne.sujet} » a une note moyenne de {ligne.mean:.2f} ({ligne.count} messages)")
 
-onglets = st.tabs(["🏠 Vue d'ensemble", "📈 Temporel", "💬 Textes & mots", "🧩 Thèmes", "👥 Auteurs", "🤖 IA", "🗂️ Explorer"])
+PAGES = ["🏠 Vue d'ensemble", "📈 Temporel", "💬 Textes & mots", "🧩 Thèmes", "👥 Auteurs", "🤖 IA", "🗂️ Explorer"]
+# Sélecteur persistant (st.tabs reviendrait à la 1re page à chaque clic sur un bouton)
+page = st.segmented_control("Page", PAGES, default=PAGES[0], key="page", label_visibility="collapsed") or PAGES[0]
 
-with onglets[0]:
+if page == PAGES[0]:
     a, b = st.columns(2)
     rep = f["categorie"].value_counts().reindex(["positif", "neutre", "négatif"]).fillna(0).reset_index()
     rep.columns = ["catégorie", "messages"]
@@ -113,7 +115,7 @@ with onglets[0]:
                                 color_continuous_scale=ECHELLE_NOTE, range_color=[1, 5],
                                 title="Note moyenne par sujet")), width="stretch")
 
-with onglets[1]:
+if page == PAGES[1]:
     freq = st.radio("Granularité", ["Semaine", "Mois", "Jour"], horizontal=True)
     code = {"Semaine": "W", "Mois": "M", "Jour": "D"}[freq]
     evo = analyse.evolution(f, code)
@@ -127,7 +129,7 @@ with onglets[1]:
                                     labels=dict(x="Heure", y="Jour", color="Messages"),
                                     title="Quand les gens s'expriment (jour × heure)"), 340), width="stretch")
 
-with onglets[2]:
+if page == PAGES[2]:
     a, b = st.columns(2)
     mots = analyse.top_mots(f["texte"], 20)
     a.plotly_chart(style(px.bar(x=[c for _, c in mots][::-1], y=[m for m, _ in mots][::-1], orientation="h",
@@ -147,7 +149,7 @@ with onglets[2]:
                                      hover_data=["texte"], title="Méthode naïve vs VADER (S6)")), width="stretch")
     st.caption("Corrélation naïf/VADER : " + ", ".join(f"{k}={v:.2f}" for k, v in analyse.comparer_methodes(f).items()))
 
-with onglets[3]:
+if page == PAGES[3]:
     th = f.groupby("theme").agg(messages=("id", "count"), note=("note_finale", "mean")).reset_index()
     a, b = st.columns(2)
     a.plotly_chart(style(px.treemap(th, path=["theme"], values="messages", color="note",
@@ -159,7 +161,7 @@ with onglets[3]:
     choix = st.selectbox("Voir des exemples du thème", th["theme"])
     st.dataframe(f[f["theme"] == choix][["date", "sujet", "note_finale", "texte"]].head(15), hide_index=True)
 
-with onglets[4]:
+if page == PAGES[4]:
     a, b = st.columns(2)
     aut = analyse.top_auteurs(f, 15)
     a.plotly_chart(style(px.bar(aut, x="messages", y="auteur", orientation="h", color="sentiment",
@@ -173,7 +175,7 @@ with onglets[4]:
     for r in plus.itertuples():
         st.markdown(f"> {r.texte[:280]}…  \n> — *{r.auteur}* · {r.sujet} · 👍 {r.engagement}")
 
-with onglets[5]:
+if page == PAGES[5]:
     st.subheader("🤖 Intelligence artificielle (Claude)")
     cle_saisie = st.text_input("Clé API Anthropic", type="password", key="cle_api",
                                help="Gardée en mémoire pour la session uniquement. Sinon : variable ANTHROPIC_API_KEY ou fichier .env.")
@@ -213,7 +215,7 @@ with onglets[5]:
         if "ia_reponse" in st.session_state:
             st.success(st.session_state["ia_reponse"])
 
-with onglets[6]:
+if page == PAGES[6]:
     st.dataframe(f.sort_values("date", ascending=False)[
         ["date", "source", "sujet", "type", "auteur", "note_finale", "categorie", "theme", "engagement", "texte", "url"]],
         hide_index=True, column_config={"url": st.column_config.LinkColumn("lien")})
