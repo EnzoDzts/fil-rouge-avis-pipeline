@@ -1,10 +1,13 @@
-"""Collecte des avis : scraping Trustpilot et génération de données de démo."""
+"""Collecte multi-sources via des API PUBLIQUES sans clé (Mastodon, Lemmy) + extras.
+
+Toutes les fonctions renvoient des dictionnaires au même format (voir CHAMPS),
+ce qui permet d'ajouter une source sans toucher au stockage ni à l'analyse.
+"""
 import csv
-import json
 import logging
 import random
 import time
-from datetime import date, timedelta
+from datetime import datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
@@ -12,145 +15,133 @@ from bs4 import BeautifulSoup
 from .config import CHEMIN_CSV_BRUT, DELAI_ENTRE_REQUETES_S, USER_AGENT
 
 journal = logging.getLogger(__name__)
-CHAMPS = ["source", "entreprise", "auteur", "note", "date", "texte", "id_externe"]
+CHAMPS = ["source", "sujet", "auteur", "note", "date", "texte", "id_externe", "engagement", "url", "type"]
 
-
-def extraire_avis_depuis_html(html: str, entreprise: str) -> list[dict]:
-    """Extrait les avis d'une page Trustpilot à partir du JSON __NEXT_DATA__.
-
-    Args:
-        html: code HTML de la page.
-        entreprise: nom de l'entreprise (stocké avec chaque avis).
-
-    Returns:
-        Liste de dictionnaires (un par avis), vide si la structure est inconnue.
-    """
-    soupe = BeautifulSoup(html, "html.parser")
-    balise = soupe.find("script", id="__NEXT_DATA__")
-    if balise is None or not balise.string:
-        return []
-    try:
-        reviews = json.loads(balise.string)["props"]["pageProps"]["reviews"]
-    except (KeyError, json.JSONDecodeError):
-        return []
-    avis = []
-    for r in reviews:
-        avis.append({
-            "source": "trustpilot",
-            "entreprise": entreprise,
-            "auteur": (r.get("consumer") or {}).get("displayName", "anonyme"),
-            "note": int(r["rating"]),
-            "date": r["dates"]["publishedDate"][:10],
-            "texte": f'{r.get("title", "")}. {r.get("text", "")}'.strip(". "),
-            "id_externe": r["id"],
-        })
-    return avis
-
-
-def scraper_trustpilot(domaine: str, pages: int = 3) -> list[dict]:
-    """Scrape les avis Trustpilot d'un domaine (ex. 'www.boursorama.com').
-
-    S'arrête proprement si le site refuse la requête (403, blocage anti-bot).
-    """
-    resultats: list[dict] = []
-    for page in range(1, pages + 1):
-        url = f"https://fr.trustpilot.com/review/{domaine}?page={page}"
-        try:
-            rep = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=15)
-            rep.raise_for_status()
-        except requests.RequestException as erreur:
-            journal.warning("Échec scraping %s : %s", url, erreur)
-            break
-        nouveaux = extraire_avis_depuis_html(rep.text, domaine)
-        if not nouveaux:
-            break
-        resultats.extend(nouveaux)
-        time.sleep(DELAI_ENTRE_REQUETES_S)
-    return resultats
-
-
-# Fragments de phrases pour générer des avis de démonstration plausibles.
-_POSITIFS = ["Excellent service, très réactif.", "Équipe pédagogique au top, je recommande.",
-             "Très bonne expérience, cursus enrichissant.", "Super campus et bonne ambiance."]
-_NEUTRES = ["Correct sans plus.", "Quelques bons cours, d'autres moins intéressants.",
-            "Expérience moyenne, peut mieux faire."]
-_NEGATIFS = ["Administration injoignable, très décevant.", "Frais élevés pour un service médiocre.",
-             "Organisation catastrophique, je déconseille.", "Aucune réponse à mes mails, nul."]
-
-
-def generer_donnees_demo(nb_avis: int = 300, graine: int = 42) -> list[dict]:
-    """Génère des avis synthétiques (reproductibles) pour tester sans réseau.
-
-    Les données sont FICTIVES : elles servent uniquement à la démonstration.
-    """
-    hasard = random.Random(graine)
-    ecoles = {"EMLV": 0.55, "ESSEC": 0.8, "ESCP": 0.75, "EDHEC": 0.7}
-    sources = ["google_maps", "trustpilot"]
-    debut = date(2025, 1, 1)
-    avis = []
-    for i in range(nb_avis):
-        ecole = hasard.choice(list(ecoles))
-        note = min(5, max(1, round(hasard.gauss(1 + 4 * ecoles[ecole], 1.1))))
-        phrases = _POSITIFS if note >= 4 else _NEUTRES if note == 3 else _NEGATIFS
-        avis.append({
-            "source": hasard.choice(sources),
-            "entreprise": ecole,
-            "auteur": f"Utilisateur{hasard.randint(1, 500)}",
-            "note": note,
-            "date": (debut + timedelta(days=hasard.randint(0, 680))).isoformat(),
-            "texte": " ".join(hasard.sample(phrases, k=2)),
-            "id_externe": f"demo-{i}",
-        })
-    return avis
-
-
-def sauvegarder_csv(avis: list[dict], chemin=CHEMIN_CSV_BRUT) -> None:
-    """Sauvegarde les avis bruts au format CSV (livrable S3)."""
-    chemin.parent.mkdir(parents=True, exist_ok=True)
-    with open(chemin, "w", newline="", encoding="utf-8") as f:
-        ecrivain = csv.DictWriter(f, fieldnames=CHAMPS)
-        ecrivain.writeheader()
-        ecrivain.writerows(avis)
+INSTANCES_MASTODON = ["mastodon.social", "piaille.fr", "mamot.fr"]
+INSTANCE_LEMMY = "jlai.lu"  # communauté francophone
 
 
 def nettoyer_html(contenu: str) -> str:
-    """Retire les balises HTML d'un message Mastodon et normalise les espaces."""
-    return " ".join(BeautifulSoup(contenu, "html.parser").get_text(" ").split())
+    """Retire les balises HTML et normalise les espaces."""
+    return " ".join(BeautifulSoup(contenu or "", "html.parser").get_text(" ").split())
+
+
+def requete_json(url: str, params: dict | None = None, tentatives: int = 3):
+    """GET JSON avec nouvelles tentatives (les API publiques sont parfois lentes).
+
+    Returns:
+        Le JSON décodé, ou None si toutes les tentatives échouent.
+    """
+    for essai in range(1, tentatives + 1):
+        try:
+            rep = requests.get(url, params=params, headers={"User-Agent": USER_AGENT}, timeout=30)
+            rep.raise_for_status()
+            return rep.json()
+        except (requests.RequestException, ValueError) as erreur:
+            journal.warning("Tentative %d/%d échouée pour %s : %s", essai, tentatives, url, erreur)
+            time.sleep(DELAI_ENTRE_REQUETES_S * essai)
+    return None
 
 
 def collecter_mastodon(hashtag: str, pages: int = 5, instance: str = "mastodon.social") -> list[dict]:
-    """Collecte les messages publics français d'un hashtag via l'API Mastodon.
-
-    L'API de timeline par hashtag est publique et ne demande aucune clé.
-    Les messages n'ont pas de note : `note` vaut None (elle sera estimée).
-
-    Args:
-        hashtag: hashtag sans '#', ex. 'sncf'.
-        pages: nombre de pages de 40 messages à parcourir (pagination par max_id).
-        instance: serveur Mastodon interrogé.
-    """
+    """Messages publics français d'un hashtag (API Mastodon, pagination par max_id)."""
     url = f"https://{instance}/api/v1/timelines/tag/{hashtag}"
-    resultats: list[dict] = []
-    max_id = None
+    resultats, max_id = [], None
     for _ in range(pages):
         params = {"limit": 40, **({"max_id": max_id} if max_id else {})}
-        try:
-            rep = requests.get(url, params=params, headers={"User-Agent": USER_AGENT}, timeout=15)
-            rep.raise_for_status()
-            messages = rep.json()
-        except (requests.RequestException, ValueError) as erreur:
-            journal.warning("Échec Mastodon %s : %s", url, erreur)
-            break
+        messages = requete_json(url, params)
         if not messages:
             break
         for m in messages:
             texte = nettoyer_html(m["content"])
             if m.get("language") == "fr" and len(texte) > 20 and not m.get("reblog"):
                 resultats.append({
-                    "source": "mastodon", "entreprise": hashtag.lower(),
+                    "source": f"mastodon:{instance}", "sujet": hashtag.lower(),
                     "auteur": m["account"]["acct"], "note": None,
-                    "date": m["created_at"][:10], "texte": texte, "id_externe": m["id"],
+                    "date": m["created_at"][:19], "texte": texte, "id_externe": f"{instance}-{m['id']}",
+                    "engagement": m["favourites_count"] + m["reblogs_count"] + m["replies_count"],
+                    "url": m.get("url") or "", "type": "message",
                 })
         max_id = messages[-1]["id"]
         time.sleep(DELAI_ENTRE_REQUETES_S)
     return resultats
+
+
+def collecter_lemmy(mot_cle: str, pages: int = 3, instance: str = INSTANCE_LEMMY) -> list[dict]:
+    """Posts et commentaires français contenant un mot-clé (API Lemmy publique).
+
+    Le score (upvotes - downvotes) sert de mesure d'engagement.
+    """
+    url = f"https://{instance}/api/v3/search"
+    resultats = []
+    for type_ in ("Posts", "Comments"):
+        for page in range(1, pages + 1):
+            data = requete_json(url, {"q": mot_cle, "type_": type_, "sort": "New", "limit": 40, "page": page})
+            elements = (data or {}).get("posts" if type_ == "Posts" else "comments", [])
+            if not elements:
+                break
+            for e in elements:
+                if type_ == "Posts":
+                    brut = f"{e['post']['name']}. {e['post'].get('body') or ''}"
+                    identifiant, date, lien = f"p{e['post']['id']}", e["post"]["published"], e["post"].get("ap_id", "")
+                else:
+                    brut = e["comment"]["content"]
+                    identifiant, date, lien = f"c{e['comment']['id']}", e["comment"]["published"], e["comment"].get("ap_id", "")
+                texte = " ".join(brut.split())
+                if len(texte) < 20 or e["comment" if type_ == "Comments" else "post"].get("removed"):
+                    continue
+                resultats.append({
+                    "source": f"lemmy:{instance}", "sujet": mot_cle.lower(), "auteur": e["creator"]["name"],
+                    "note": None, "date": date[:19], "texte": texte[:2000],
+                    "id_externe": f"{instance}-{identifiant}", "engagement": e["counts"]["score"],
+                    "url": lien, "type": "post" if type_ == "Posts" else "commentaire",
+                })
+            time.sleep(DELAI_ENTRE_REQUETES_S)
+    return resultats
+
+
+def collecter_tout(sujets: list[str], pages: int = 4) -> list[dict]:
+    """Collecte chaque sujet sur toutes les sources (Mastodon x instances + Lemmy)."""
+    avis = []
+    for sujet in sujets:
+        for instance in INSTANCES_MASTODON:
+            avis += collecter_mastodon(sujet, pages, instance)
+        avis += collecter_lemmy(sujet, max(1, pages // 2))
+        journal.info("Sujet %s : %d avis cumulés", sujet, len(avis))
+    return avis
+
+
+_POSITIFS = ["Excellent service, très réactif.", "Équipe au top, je recommande.", "Très bonne expérience, merci.",
+             "Super ambiance et personnel agréable."]
+_NEUTRES = ["Correct sans plus.", "Quelques bons points, d'autres moins.", "Expérience moyenne."]
+_NEGATIFS = ["Retard énorme, très décevant.", "Frais élevés pour un service médiocre.",
+             "Organisation catastrophique, je déconseille.", "Aucune réponse, nul."]
+
+
+def generer_donnees_demo(nb_avis: int = 300, graine: int = 42) -> list[dict]:
+    """Génère des avis FICTIFS reproductibles pour tester hors ligne."""
+    hasard = random.Random(graine)
+    qualite = {"sncf": 0.45, "ratp": 0.5, "universite": 0.65, "emlv": 0.7}
+    debut = datetime(2025, 1, 1)
+    avis = []
+    for i in range(nb_avis):
+        sujet = hasard.choice(list(qualite))
+        note = min(5, max(1, round(hasard.gauss(1 + 4 * qualite[sujet], 1.1))))
+        phrases = _POSITIFS if note >= 4 else _NEUTRES if note == 3 else _NEGATIFS
+        avis.append({
+            "source": hasard.choice(["demo:google_maps", "demo:trustpilot"]), "sujet": sujet,
+            "auteur": f"Utilisateur{hasard.randint(1, 500)}", "note": note,
+            "date": (debut + timedelta(minutes=hasard.randint(0, 680 * 1440))).isoformat(timespec="seconds"),
+            "texte": " ".join(hasard.sample(phrases, k=2)), "id_externe": f"demo-{i}",
+            "engagement": hasard.randint(0, 30), "url": "", "type": "avis",
+        })
+    return avis
+
+
+def sauvegarder_csv(avis: list[dict], chemin=CHEMIN_CSV_BRUT) -> None:
+    """Sauvegarde les avis bruts au format CSV."""
+    chemin.parent.mkdir(parents=True, exist_ok=True)
+    with open(chemin, "w", newline="", encoding="utf-8") as f:
+        ecrivain = csv.DictWriter(f, fieldnames=CHAMPS)
+        ecrivain.writeheader()
+        ecrivain.writerows(avis)

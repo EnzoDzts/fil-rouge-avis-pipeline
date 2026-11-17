@@ -14,14 +14,19 @@ CREATE TABLE IF NOT EXISTS sources (
 CREATE TABLE IF NOT EXISTS avis (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     source_id INTEGER NOT NULL REFERENCES sources(id),
-    entreprise TEXT NOT NULL,
+    sujet TEXT NOT NULL,
     auteur TEXT,
     note INTEGER CHECK (note IS NULL OR note BETWEEN 1 AND 5),
     date TEXT NOT NULL,
     texte TEXT,
     id_externe TEXT NOT NULL,
+    engagement INTEGER DEFAULT 0,
+    url TEXT,
+    type TEXT,
     UNIQUE (source_id, id_externe)
 );
+CREATE INDEX IF NOT EXISTS idx_avis_date ON avis(date);
+CREATE INDEX IF NOT EXISTS idx_avis_sujet ON avis(sujet);
 """
 
 
@@ -45,9 +50,10 @@ def inserer_avis(avis: list[dict], chemin=CHEMIN_DB) -> int:
             conn.execute("INSERT OR IGNORE INTO sources(nom) VALUES (?)", (a["source"],))
             source_id = conn.execute("SELECT id FROM sources WHERE nom=?", (a["source"],)).fetchone()[0]
             conn.execute(
-                "INSERT OR IGNORE INTO avis(source_id, entreprise, auteur, note, date, texte, id_externe)"
-                " VALUES (?,?,?,?,?,?,?)",
-                (source_id, a["entreprise"], a["auteur"], a["note"], a["date"], a["texte"], a["id_externe"]),
+                "INSERT OR IGNORE INTO avis(source_id, sujet, auteur, note, date, texte, id_externe,"
+                " engagement, url, type) VALUES (?,?,?,?,?,?,?,?,?,?)",
+                (source_id, a["sujet"], a["auteur"], a["note"], a["date"], a["texte"], a["id_externe"],
+                 a.get("engagement", 0), a.get("url", ""), a.get("type", "")),
             )
         conn.commit()
         return conn.execute("SELECT COUNT(*) FROM avis").fetchone()[0] - avant
@@ -57,7 +63,7 @@ def charger_avis(chemin=CHEMIN_DB) -> pd.DataFrame:
     """Charge tous les avis (jointure avec sources) dans un DataFrame."""
     with closing(connecter(chemin)) as conn:
         return pd.read_sql_query(
-            "SELECT a.id, s.nom AS source, a.entreprise, a.auteur, a.note, a.date, a.texte"
-            " FROM avis a JOIN sources s ON s.id = a.source_id",
+            "SELECT a.id, s.nom AS source, a.sujet, a.auteur, a.note, a.date, a.texte,"
+            " a.engagement, a.url, a.type FROM avis a JOIN sources s ON s.id = a.source_id",
             conn, parse_dates=["date"],
         )
