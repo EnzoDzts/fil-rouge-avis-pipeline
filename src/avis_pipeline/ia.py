@@ -26,7 +26,7 @@ def obtenir_cle(cle: str | None = None) -> str | None:
 
 
 def interroger_claude(consigne: str, contenu: str, cle: str | None = None,
-                      modele: str = MODELE_PAR_DEFAUT, max_tokens: int = 1200) -> str:
+                      modele: str = MODELE_PAR_DEFAUT, max_tokens: int = 6000) -> str:
     """Envoie une consigne + des données à Claude et renvoie sa réponse texte.
 
     Raises:
@@ -50,7 +50,12 @@ def interroger_claude(consigne: str, contenu: str, cle: str | None = None,
         raise ErreurIA("Impossible de joindre l'API Claude (réseau).") from e
     except anthropic.APIError as e:
         raise ErreurIA(f"Erreur de l'API Claude : {e}") from e
-    return "".join(bloc.text for bloc in rep.content if bloc.type == "text")
+    texte = "".join(bloc.text for bloc in rep.content if bloc.type == "text").strip()
+    if not texte:
+        # ex. limite de tokens atteinte pendant le raisonnement : on le dit au lieu d'afficher du vide
+        types = ", ".join(bloc.type for bloc in rep.content) or "aucun"
+        raise ErreurIA(f"Claude a renvoyé une réponse vide (arrêt : {rep.stop_reason}, blocs : {types}). Réessayez.")
+    return texte
 
 
 def echantillon_pour_prompt(df: pd.DataFrame, n: int = MAX_MESSAGES_PROMPT) -> str:
@@ -91,7 +96,7 @@ def reponse_avis_negatif(texte: str, sujet: str, cle: str | None = None) -> str:
     """Rédige une réponse professionnelle et empathique à un message négatif."""
     consigne = ("Tu es community manager. Rédige en français une réponse courte (3-4 phrases), "
                 "empathique et professionnelle, sans promesse irréaliste ni information inventée.")
-    return interroger_claude(consigne, f"Sujet : {sujet}\nMessage à traiter :\n{texte}", cle, max_tokens=400)
+    return interroger_claude(consigne, f"Sujet : {sujet}\nMessage à traiter :\n{texte}", cle, max_tokens=2000)
 
 
 def veille_concurrentielle(df: pd.DataFrame, cle: str | None = None) -> str:
@@ -102,4 +107,4 @@ def veille_concurrentielle(df: pd.DataFrame, cle: str | None = None) -> str:
     blocs = []
     for sujet, g in df.groupby("sujet"):
         blocs.append(f"### {sujet} (note moyenne {g['note_finale'].mean():.2f})\n{echantillon_pour_prompt(g, 15)}")
-    return interroger_claude(consigne, statistiques_pour_prompt(df) + "\n\n" + "\n\n".join(blocs), cle, max_tokens=1500)
+    return interroger_claude(consigne, statistiques_pour_prompt(df) + "\n\n" + "\n\n".join(blocs), cle, max_tokens=8000)

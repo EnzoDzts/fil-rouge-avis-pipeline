@@ -105,3 +105,17 @@ def test_nettoyage_bots_et_urls():
     df = pd.DataFrame({"sujet": ["a", "a", "a"], "texte": ["Automated archive made with bot", "vrai avis", "vrai avis"]})
     assert list(analyse.nettoyer_donnees(df)["texte"]) == ["vrai avis"]
     assert "spip" not in analyse.tokeniser("voir https://x.fr/spip.php?article1 train")
+
+
+def test_ia_reponse_vide_signalee(monkeypatch):
+    import anthropic
+    import pytest
+    from avis_pipeline import ia
+
+    class Faux:
+        def __init__(self, **k): self.messages = self
+        def create(self, **k):
+            return type("R", (), {"content": [type("B", (), {"type": "thinking"})()], "stop_reason": "max_tokens"})()
+    monkeypatch.setattr(anthropic, "Anthropic", Faux)
+    with pytest.raises(ia.ErreurIA, match="vide"):
+        ia.interroger_claude("c", "x", cle="sk-test")
