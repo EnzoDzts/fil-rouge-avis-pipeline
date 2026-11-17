@@ -4,10 +4,15 @@ Toutes les fonctions renvoient des dictionnaires au même format (voir CHAMPS),
 ce qui permet d'ajouter une source sans toucher au stockage ni à l'analyse.
 """
 import csv
+import hashlib
 import logging
+import os
 import random
+import re
 import time
 from datetime import datetime, timedelta
+
+from urllib.parse import quote
 
 import requests
 from bs4 import BeautifulSoup
@@ -21,9 +26,32 @@ INSTANCES_MASTODON = ["mastodon.social", "piaille.fr", "mamot.fr"]
 INSTANCE_LEMMY = "jlai.lu"  # communauté francophone
 
 
+MOTIF_MENTION = re.compile(r"@[\w.-]+(?:@[\w.-]+)?")
+
+
+def pseudonymiser(auteur: str) -> str:
+    """Remplace un identifiant par un pseudonyme stable (hachage salé) : protège les données personnelles.
+
+    Le sel peut être fixé via la variable d'environnement PSEUDO_SEL.
+    """
+    sel = os.environ.get("PSEUDO_SEL", "observatoire-avis")
+    return "u_" + hashlib.sha256(f"{sel}:{auteur}".encode()).hexdigest()[:10]
+
+
+def anonymiser_texte(texte: str) -> str:
+    """Masque les mentions @utilisateur présentes dans un texte."""
+    return MOTIF_MENTION.sub("@utilisateur", texte)
+
+
+def url_sure(url: str | None) -> str:
+    """Ne conserve que les liens http(s) (refuse javascript:, data:, etc.)."""
+    return url if url and url.lower().startswith(("http://", "https://")) else ""
+
+
 def nettoyer_html(contenu: str) -> str:
-    """Retire les balises HTML et normalise les espaces."""
-    return " ".join(BeautifulSoup(contenu or "", "html.parser").get_text(" ").split())
+    """Retire les balises HTML, masque les mentions et normalise les espaces."""
+    texte = " ".join(BeautifulSoup(contenu or "", "html.parser").get_text(" ").split())
+    return anonymiser_texte(texte)
 
 
 def requete_json(url: str, params: dict | None = None, tentatives: int = 3):
@@ -45,7 +73,7 @@ def requete_json(url: str, params: dict | None = None, tentatives: int = 3):
 
 def collecter_mastodon(hashtag: str, pages: int = 5, instance: str = "mastodon.social") -> list[dict]:
     """Messages publics français d'un hashtag (API Mastodon, pagination par max_id)."""
-    url = f"https://{instance}/api/v1/timelines/tag/{hashtag}"
+    url = f"https://{instance}/api/v1/timelines/tag/{quote(hashtag, safe='')}"
     resultats, max_id = [], None
     for _ in range(pages):
         params = {"limit": 40, **({"max_id": max_id} if max_id else {})}
@@ -57,10 +85,10 @@ def collecter_mastodon(hashtag: str, pages: int = 5, instance: str = "mastodon.s
             if m.get("language") == "fr" and len(texte) > 20 and not m.get("reblog"):
                 resultats.append({
                     "source": f"mastodon:{instance}", "sujet": hashtag.lower(),
-                    "auteur": m["account"]["acct"], "note": None,
+                    "auteur": pseudonymiser(m["account"]["acct"]), "note": None,
                     "date": m["created_at"][:19], "texte": texte, "id_externe": f"{instance}-{m['id']}",
                     "engagement": m["favourites_count"] + m["reblogs_count"] + m["replies_count"],
-                    "url": m.get("url") or "", "type": "message",
+                    "url": url_sure(m.get("url")), "type": "message",
                 })
         max_id = messages[-1]["id"]
         time.sleep(DELAI_ENTRE_REQUETES_S)
@@ -87,14 +115,14 @@ def collecter_lemmy(mot_cle: str, pages: int = 3, instance: str = INSTANCE_LEMMY
                 else:
                     brut = e["comment"]["content"]
                     identifiant, date, lien = f"c{e['comment']['id']}", e["comment"]["published"], e["comment"].get("ap_id", "")
-                texte = " ".join(brut.split())
+                texte = anonymiser_texte(" ".join(brut.split()))
                 if len(texte) < 20 or e["comment" if type_ == "Comments" else "post"].get("removed"):
                     continue
                 resultats.append({
-                    "source": f"lemmy:{instance}", "sujet": mot_cle.lower(), "auteur": e["creator"]["name"],
+                    "source": f"lemmy:{instance}", "sujet": mot_cle.lower(), "auteur": pseudonymiser(e["creator"]["name"]),
                     "note": None, "date": date[:19], "texte": texte[:2000],
                     "id_externe": f"{instance}-{identifiant}", "engagement": e["counts"]["score"],
-                    "url": lien, "type": "post" if type_ == "Posts" else "commentaire",
+                    "url": url_sure(lien), "type": "post" if type_ == "Posts" else "commentaire",
                 })
             time.sleep(DELAI_ENTRE_REQUETES_S)
     return resultats

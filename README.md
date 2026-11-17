@@ -1,4 +1,4 @@
-# 📊 Observatoire d'avis — Data Pipeline 100 % Python
+# Observatoire d'avis — Data Pipeline 100 % Python
 
 Projet Fil Rouge Avancé — EMLV MSID, Introduction à Python 2026-2027.
 Collecte → Stockage → Analyse NLP → Dashboard interactif, uniquement avec des **API publiques sans clé**.
@@ -10,7 +10,7 @@ Collecte → Stockage → Analyse NLP → Dashboard interactif, uniquement avec 
 | Stockage | `stockage.py` | SQLite (`sources`, `avis`), index, insertion incrémentale sans doublon, engagement/URL/type |
 | Analyse | `analyse.py` | Sentiment naïf FR (négations) vs VADER, note estimée, évolution, heatmap jour×heure, mots, bigrammes, nuage de mots, thèmes (TF-IDF + KMeans), auteurs, alertes |
 | Dashboard | `dashboard.py` | Streamlit thème sombre, 7 onglets, 6 filtres, ~15 graphiques Plotly, export CSV |
-| Extension IA | `ia.py` | **API Claude** : synthèse hebdomadaire, veille concurrentielle, réponse automatique aux messages négatifs (onglet 🤖 IA) ; clé via saisie dans l'app, `ANTHROPIC_API_KEY` ou `.env` |
+| Extension IA | `ia.py` | **API Claude** : synthèse hebdomadaire, veille concurrentielle, réponse automatique aux messages négatifs (page Intelligence artificielle) ; clé via saisie dans l'app, `ANTHROPIC_API_KEY` ou `.env` |
 | Collecte continue | `scheduler.py` | APScheduler : collecte périodique + alerte si la note moyenne d'un sujet chute |
 | Déploiement | `Dockerfile` | Image prête à l'emploi |
 | Exploration | `notebooks/S5_analyse_exploratoire.ipynb` | Notebook pandas documenté |
@@ -23,7 +23,7 @@ export PYTHONPATH=src
 ```
 
 ## Activer l'IA (Claude)
-Créez une clé sur https://console.anthropic.com puis, au choix : la coller dans l'onglet 🤖 IA du dashboard (gardée en mémoire de session), ou `cp .env.example .env` et la renseigner. `.env` est ignoré par git.
+Créez une clé sur https://console.anthropic.com puis, au choix : la coller dans la page Intelligence artificielle du dashboard (gardée en mémoire de session), ou `cp .env.example .env` et la renseigner. `.env` est ignoré par git.
 
 ## Utilisation
 ```bash
@@ -35,6 +35,19 @@ python -m avis_pipeline.scheduler --minutes 30           # collecte continue + a
 pytest                                                   # tests
 docker build -t avis . && docker run -p 8501:8501 avis
 ```
+
+## Sécurité et données personnelles
+- **Secrets** : la clé API n'est jamais dans le code ni dans git (`.env` ignoré). Sur un hébergeur, utilisez ses « Secrets ».
+- **Pseudonymisation** : les identifiants d'auteurs sont remplacés par un hachage salé (`PSEUDO_SEL`), les mentions `@nom` sont masquées dans les textes.
+- **Entrées non fiables** : les textes collectés sont échappés avant affichage, les liens limités à http(s), les requêtes SQL paramétrées, les images markdown retirées des réponses IA.
+- **Injection de consignes** : les messages envoyés à Claude sont délimités et traités comme des données.
+- **Budget IA** : si la clé est celle du serveur, chaque session est limitée à `IA_MAX_APPELS` appels (8 par défaut) ; un visiteur peut saisir sa propre clé. Fixez aussi une limite de dépense dans la console Anthropic.
+- Dépendances auditées avec `pip-audit` (aucune vulnérabilité connue).
+
+## Déploiement (Streamlit Community Cloud)
+1. Dépôt GitHub poussé, puis « New app » sur share.streamlit.io : fichier principal `dashboard.py`.
+2. Dans « Advanced settings > Secrets » : `ANTHROPIC_API_KEY = "sk-ant-..."` (facultatif) et `PYTHONPATH = "src"` n'est pas nécessaire (le dashboard ajoute `src` au chemin).
+3. Au premier démarrage, la base est amorcée depuis `data/avis_snapshot.csv` (instantané pseudonymisé).
 
 ## Limites connues
 - Les messages Mastodon/Lemmy n'ont pas de note : elle est **estimée** (1-5) depuis le sentiment naïf, une approximation.

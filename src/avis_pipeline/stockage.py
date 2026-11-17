@@ -67,3 +67,38 @@ def charger_avis(chemin=CHEMIN_DB) -> pd.DataFrame:
             " a.engagement, a.url, a.type FROM avis a JOIN sources s ON s.id = a.source_id",
             conn, parse_dates=["date"],
         )
+
+
+def anonymiser_base(chemin=CHEMIN_DB) -> int:
+    """Pseudonymise les auteurs, masque les mentions et filtre les URL déjà en base.
+
+    Returns:
+        Le nombre de lignes modifiées.
+    """
+    from .collecte import anonymiser_texte, pseudonymiser, url_sure
+    modifiees = 0
+    with closing(connecter(chemin)) as conn:
+        for id_, auteur, texte, url in conn.execute("SELECT id, auteur, texte, url FROM avis").fetchall():
+            nouveau = (auteur if (auteur or "").startswith("u_") else pseudonymiser(auteur or ""),
+                       anonymiser_texte(texte or ""), url_sure(url))
+            if nouveau != (auteur, texte, url):
+                conn.execute("UPDATE avis SET auteur=?, texte=?, url=? WHERE id=?", (*nouveau, id_))
+                modifiees += 1
+        conn.commit()
+    return modifiees
+
+
+def exporter_snapshot(chemin_csv, chemin=CHEMIN_DB) -> int:
+    """Exporte la base en CSV (instantané versionnable, déjà pseudonymisé)."""
+    with closing(connecter(chemin)) as conn:
+        df = pd.read_sql_query(
+            "SELECT s.nom AS source, a.sujet, a.auteur, a.note, a.date, a.texte, a.id_externe,"
+            " a.engagement, a.url, a.type FROM avis a JOIN sources s ON s.id = a.source_id", conn)
+    df.to_csv(chemin_csv, index=False)
+    return len(df)
+
+
+def amorcer_depuis_csv(chemin_csv, chemin=CHEMIN_DB) -> int:
+    """Remplit la base depuis un CSV d'instantané (démarrage d'un déploiement sans base)."""
+    df = pd.read_csv(chemin_csv).astype(object).where(lambda d: d.notna(), None)
+    return inserer_avis(df.to_dict("records"), chemin)
