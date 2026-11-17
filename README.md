@@ -10,7 +10,7 @@ Collecte → Stockage → Analyse NLP → Dashboard interactif, uniquement avec 
 | Stockage | `stockage.py` | SQLite (`sources`, `avis`), index, insertion incrémentale sans doublon, engagement/URL/type |
 | Analyse | `analyse.py` | Sentiment naïf FR (négations) vs VADER, note estimée, évolution, heatmap jour×heure, mots, bigrammes, nuage de mots, thèmes (TF-IDF + KMeans), auteurs, alertes |
 | Dashboard | `dashboard.py` | Streamlit thème sombre, 7 onglets, 6 filtres, ~15 graphiques Plotly, export CSV |
-| Extension IA | `ia.py` | Synthèse via l'API Claude (`ANTHROPIC_API_KEY`), repli local sans clé |
+| Extension IA | `ia.py` | **API Claude** : synthèse hebdomadaire, veille concurrentielle, réponse automatique aux messages négatifs (onglet 🤖 IA) ; clé via saisie dans l'app, `ANTHROPIC_API_KEY` ou `.env` |
 | Collecte continue | `scheduler.py` | APScheduler : collecte périodique + alerte si la note moyenne d'un sujet chute |
 | Déploiement | `Dockerfile` | Image prête à l'emploi |
 | Exploration | `notebooks/S5_analyse_exploratoire.ipynb` | Notebook pandas documenté |
@@ -21,6 +21,9 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 export PYTHONPATH=src
 ```
+
+## Activer l'IA (Claude)
+Créez une clé sur https://console.anthropic.com puis, au choix : la coller dans l'onglet 🤖 IA du dashboard (gardée en mémoire de session), ou `cp .env.example .env` et la renseigner. `.env` est ignoré par git.
 
 ## Utilisation
 ```bash

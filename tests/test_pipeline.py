@@ -63,3 +63,39 @@ def test_collecte_api_indisponible(monkeypatch):
     monkeypatch.setattr(collecte, "requete_json", lambda *a, **k: None)
     assert collecte.collecter_mastodon("sncf", 2) == []
     assert collecte.collecter_lemmy("sncf", 1) == []
+
+
+def test_ia_sans_cle_leve_erreur_lisible(monkeypatch):
+    import pytest
+    from avis_pipeline import ia
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.setattr(ia, "obtenir_cle", lambda cle=None: None)
+    with pytest.raises(ia.ErreurIA):
+        ia.interroger_claude("c", "x")
+
+
+def test_ia_appel_simule(monkeypatch):
+    """Vérifie le câblage vers le SDK sans appeler le réseau."""
+    import anthropic
+    from avis_pipeline import ia
+
+    class Faux:
+        def __init__(self, **k): self.messages = self
+        def create(self, **k):
+            assert k["model"] == ia.MODELE_PAR_DEFAUT and k["system"] == "c"
+            return type("R", (), {"content": [type("B", (), {"type": "text", "text": "ok"})()]})()
+    monkeypatch.setattr(anthropic, "Anthropic", Faux)
+    assert ia.interroger_claude("c", "x", cle="sk-test") == "ok"
+
+
+def test_prompt_statistiques(tmp_path):
+    from avis_pipeline import ia
+    df = analyse.ajouter_sentiments(collecte_df())
+    assert "messages" in ia.statistiques_pour_prompt(df) and "-" in ia.echantillon_pour_prompt(df)
+
+
+def collecte_df():
+    base = pd.DataFrame(collecte.generer_donnees_demo(30))
+    base["date"] = pd.to_datetime(base["date"])
+    base["id"] = range(len(base))
+    return base

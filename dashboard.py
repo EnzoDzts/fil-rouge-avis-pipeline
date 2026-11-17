@@ -160,9 +160,44 @@ with onglets[4]:
         st.markdown(f"> {r.texte[:280]}…  \n> — *{r.auteur}* · {r.sujet} · 👍 {r.engagement}")
 
 with onglets[5]:
-    st.subheader("Synthèse")
-    st.info(ia.synthese_hebdo(f))
-    st.caption("Définissez ANTHROPIC_API_KEY pour une synthèse générée par Claude ; sinon synthèse chiffrée locale.")
+    st.subheader("🤖 Intelligence artificielle (Claude)")
+    cle_saisie = st.text_input("Clé API Anthropic", type="password", key="cle_api",
+                               help="Gardée en mémoire pour la session uniquement. Sinon : variable ANTHROPIC_API_KEY ou fichier .env.")
+    cle = ia.obtenir_cle(cle_saisie)
+    st.caption("✅ Clé détectée" if cle else "⚠️ Pas de clé : seule la synthèse chiffrée locale est disponible.")
+    st.info(ia.synthese_locale(f))
+    st.caption(f"Les analyses portent sur les {len(f)} messages filtrés (échantillon de {ia.MAX_MESSAGES_PROMPT} envoyé à Claude).")
+
+    def lancer(cle_etat: str, fonction, *args):
+        """Exécute un appel Claude, stocke le résultat en session et affiche les erreurs proprement."""
+        try:
+            with st.spinner("Claude analyse les messages…"):
+                st.session_state[cle_etat] = fonction(*args, cle)
+        except ia.ErreurIA as erreur:
+            st.error(str(erreur))
+
+    a, b = st.columns(2)
+    if a.button("📝 Synthèse hebdomadaire", width="stretch"):
+        lancer("ia_synthese", ia.synthese_hebdo, f)
+    if b.button("🔭 Veille concurrentielle", width="stretch"):
+        lancer("ia_veille", ia.veille_concurrentielle, f)
+    for etat, titre in (("ia_synthese", "Synthèse hebdomadaire"), ("ia_veille", "Veille concurrentielle")):
+        if etat in st.session_state:
+            st.markdown(f"#### {titre}")
+            st.markdown(st.session_state[etat])
+
+    st.divider()
+    st.markdown("#### ✉️ Réponse automatique à un message négatif")
+    negatifs = f[f["categorie"] == "négatif"].sort_values("engagement", ascending=False).head(30)
+    if negatifs.empty:
+        st.write("Aucun message négatif dans la sélection.")
+    else:
+        choix = st.selectbox("Message", negatifs.index, format_func=lambda i: f"[{negatifs.loc[i, 'sujet']}] {negatifs.loc[i, 'texte'][:110]}…")
+        st.write(negatifs.loc[choix, "texte"])
+        if st.button("Rédiger une réponse"):
+            lancer("ia_reponse", ia.reponse_avis_negatif, negatifs.loc[choix, "texte"], negatifs.loc[choix, "sujet"])
+        if "ia_reponse" in st.session_state:
+            st.success(st.session_state["ia_reponse"])
 
 with onglets[6]:
     st.dataframe(f.sort_values("date", ascending=False)[

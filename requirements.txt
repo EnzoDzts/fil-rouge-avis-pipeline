@@ -9,3 +9,4 @@ scikit-learn
 apscheduler
 anthropic
 pytest
+python-dotenv
