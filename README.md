@@ -1,33 +1,40 @@
-# Application Data Pipeline — Avis (Collecte · Stockage · Analyse · Dashboard)
+# 📊 Observatoire d'avis — Data Pipeline 100 % Python
 
-Projet Fil Rouge Avancé — EMLV MSID, Introduction à Python 2026-2027. 100 % Python.
+Projet Fil Rouge Avancé — EMLV MSID, Introduction à Python 2026-2027.
+Collecte → Stockage → Analyse NLP → Dashboard interactif, uniquement avec des **API publiques sans clé**.
 
-## Architecture
+## Fonctionnalités
 | Étape | Module | Contenu |
 |---|---|---|
-| Collecte | `src/avis_pipeline/collecte.py` | **API publique Mastodon** (messages français par hashtag, sans clé, pagination), scraper Trustpilot optionnel, export CSV, données de démo |
-| Stockage | `stockage.py` | SQLite, tables `sources` et `avis`, insertion incrémentale (contrainte `UNIQUE`) |
-| Analyse | `analyse.py` | Stats pandas, évolution mensuelle, top mots, nuage de mots, sentiment naïf (lexique FR + négations) vs VADER |
-| Dashboard | `dashboard.py` | Streamlit + Plotly, filtres source/entreprise/date/note, graphiques dynamiques |
-| Extension | `ia.py` | Synthèse via l'API Claude (repli sur une synthèse locale sans clé `ANTHROPIC_API_KEY`) |
+| Collecte | `collecte.py` | **Mastodon** (mastodon.social, piaille.fr, mamot.fr) + **Lemmy** (jlai.lu, posts et commentaires) ; messages français, pagination, nouvelles tentatives ; export CSV ; mode démo |
+| Stockage | `stockage.py` | SQLite (`sources`, `avis`), index, insertion incrémentale sans doublon, engagement/URL/type |
+| Analyse | `analyse.py` | Sentiment naïf FR (négations) vs VADER, note estimée, évolution, heatmap jour×heure, mots, bigrammes, nuage de mots, thèmes (TF-IDF + KMeans), auteurs, alertes |
+| Dashboard | `dashboard.py` | Streamlit thème sombre, 7 onglets, 6 filtres, ~15 graphiques Plotly, export CSV |
+| Extension IA | `ia.py` | Synthèse via l'API Claude (`ANTHROPIC_API_KEY`), repli local sans clé |
+| Collecte continue | `scheduler.py` | APScheduler : collecte périodique + alerte si la note moyenne d'un sujet chute |
+| Déploiement | `Dockerfile` | Image prête à l'emploi |
+| Exploration | `notebooks/S5_analyse_exploratoire.ipynb` | Notebook pandas documenté |
 
 ## Installation
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+export PYTHONPATH=src
 ```
 
 ## Utilisation
 ```bash
-export PYTHONPATH=src
-python -m avis_pipeline.cli --mastodon sncf ratp universite --pages 6   # VRAIES données (API publique)
-python -m avis_pipeline.cli --demo                                      # données fictives (hors ligne)
-streamlit run dashboard.py
-pytest
+python -m avis_pipeline.cli                              # collecte les sujets par défaut (~3 500 messages)
+python -m avis_pipeline.cli --sujets sncf metro --pages 3
+python -m avis_pipeline.cli --demo                       # données fictives hors ligne
+streamlit run dashboard.py                               # dashboard sur http://localhost:8501
+python -m avis_pipeline.scheduler --minutes 30           # collecte continue + alertes
+pytest                                                   # tests
+docker build -t avis . && docker run -p 8501:8501 avis
 ```
 
 ## Limites connues
-- Les messages Mastodon n'ont pas de note : elle est **estimée** (1 à 5) depuis le sentiment naïf. C'est une approximation, pas une vraie note.
-- Seuls les messages publics en français sont gardés (champ `language`).
-- Le scraper Trustpilot est souvent bloqué (HTTP 403) : il s'arrête proprement. Respectez CGU et robots.txt.
-- VADER est conçu pour l'anglais ; piste d'amélioration : CamemBERT.
+- Les messages Mastodon/Lemmy n'ont pas de note : elle est **estimée** (1-5) depuis le sentiment naïf, une approximation.
+- Seuls les messages français sont conservés (champ `language` Mastodon ; instance francophone pour Lemmy).
+- VADER est conçu pour l'anglais ; piste d'amélioration : CamemBERT (HuggingFace).
+- Les API publiques peuvent être lentes ou indisponibles : le collecteur réessaie puis s'arrête proprement.
