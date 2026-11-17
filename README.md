@@ -3,6 +3,8 @@
 Projet Fil Rouge Avancé — EMLV MSID, Introduction à Python 2026-2027.
 Collecte → Stockage → Analyse NLP → Dashboard interactif, uniquement avec des **API publiques sans clé**.
 
+**Application en ligne : https://observatoire-avis-emlv.streamlit.app**
+
 ## Fonctionnalités
 | Étape | Module | Contenu |
 |---|---|---|
